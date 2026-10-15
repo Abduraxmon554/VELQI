@@ -8,6 +8,11 @@ const { protect } = require('../middleware/auth');
 const { authLimiter } = require('../middleware/security');
 const { body } = require('express-validator');
 const passport = require('../config/passport');
+const googleOAuthEnabled = Boolean(
+  process.env.GOOGLE_CLIENT_ID &&
+  process.env.GOOGLE_CLIENT_SECRET &&
+  process.env.GOOGLE_CALLBACK_URL
+);
 
 // Validation rules
 const registerValidation = [
@@ -30,15 +35,23 @@ router.post('/forgot-password', authLimiter, forgotPassword);
 router.put('/reset-password/:token', resetPassword);
 router.get('/verify-email/:token', verifyEmail);
 
-// Google OAuth
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
-    const token = req.user.getSignedJwtToken();
-    res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-    res.redirect('/dashboard');
-  }
-);
+if (googleOAuthEnabled) {
+  router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+  router.get('/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    (req, res) => {
+      const token = req.user.getSignedJwtToken();
+      res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+      res.redirect('/dashboard');
+    }
+  );
+} else {
+  router.get('/google', (req, res) => {
+    res.status(503).json({ success: false, message: 'Google orqali kirish sozlanmagan' });
+  });
+  router.get('/google/callback', (req, res) => {
+    res.status(503).json({ success: false, message: 'Google orqali kirish sozlanmagan' });
+  });
+}
 
 module.exports = router;
