@@ -35,6 +35,11 @@ const app = express();
 
 // Trust proxy
 app.set('trust proxy', 1);
+app.locals.googleOAuthEnabled = Boolean(
+  process.env.GOOGLE_CLIENT_ID &&
+  process.env.GOOGLE_CLIENT_SECRET &&
+  process.env.GOOGLE_CALLBACK_URL
+);
 
 // View engine
 app.set('view engine', 'ejs');

@@ -33,6 +33,14 @@
       <h2 class="auth-title">Ro'yxatdan O'tish 📝</h2>
       <p class="auth-subtitle">Bir necha soniyada yangi hisob oching</p>
 
+      <% if (googleOAuthEnabled) { %>
+      <a class="social-btn google-login-btn" href="/api/auth/google">
+        <i class="fa-brands fa-google" aria-hidden="true"></i>
+        Google bilan davom etish
+      </a>
+      <div class="divider">yoki email orqali</div>
+      <% } %>
+
       <form id="registerForm">
         <div class="form-group">
           <label class="form-label">To'liq Ismingiz</label>

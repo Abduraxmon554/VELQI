@@ -12,8 +12,9 @@ MongoDB o'chiq bo'lsa ham sayt ochiladi, 10 soniyada bir marta qayta ulanishga u
 1. GitHub'dagi `Abduraxmon554/VELQI` repozitoriyasini Vercel'da import qiling.
 2. Project Name sifatida kichik harfli `velqi` ni kiriting va Framework Preset'ni `Other` qilib tanlang. Root Directory `./` bo'lib qolsin; Build Command va Output Directory'ni bo'sh qoldiring.
 3. Deploy qilishdan oldin Environment Variables bo'limiga `MONGO_URI`, `JWT_SECRET` va `SESSION_SECRET` ni kiriting. MongoDB Atlas kabi tashqi MongoDB kerak; `mongodb://localhost` Vercel'da ishlamaydi. `CLIENT_URL` va `PUBLIC_BASE_URL` ni deploy'dan keyin berilgan `https://...vercel.app` manziliga sozlang.
-4. Google OAuth, email, Click, Payme yoki Stripe ishlatilsa, tegishli kalitlarni ham Vercel Environment Variables'ga kiriting. `STRIPE_SECRET_KEY` sozlanmagan bo'lsa, Stripe endpointlari 503 qaytaradi, qolgan sayt ishlashda davom etadi.
-5. Vercel'da Deploy tugmasini bosing. GitHub'ga yangi commit push qilinganda keyingi deploy avtomatik boshlanadi.
+4. Google bilan kirish uchun Google Cloud Console'da OAuth 2.0 Web client yarating. Authorized redirect URI sifatida `https://your-project.vercel.app/api/auth/google/callback` ni qo'shing, so'ng `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` va aynan shu manzilni `GOOGLE_CALLBACK_URL` sifatida Vercel Environment Variables'ga kiriting. `GOOGLE_CLIENT_SECRET`ni chatga yoki GitHub'ga joylamang. Google OAuth sozlanmaguncha login sahifasida Google tugmasi ko'rinmaydi.
+5. Email, Click, Payme yoki Stripe ishlatilsa, tegishli kalitlarni ham Vercel Environment Variables'ga kiriting. `STRIPE_SECRET_KEY` sozlanmagan bo'lsa, Stripe endpointlari 503 qaytaradi, qolgan sayt ishlashda davom etadi.
+6. Vercel'da Deploy tugmasini bosing. GitHub'ga yangi commit push qilinganda keyingi deploy avtomatik boshlanadi.
 
 ## Payme va Click
 1. `.env.example` dagi to'lov sozlamalarini mavjud `.env` faylingizga ko'chirib, provayder bergan merchant ma'lumotlarini kiriting. Maxfiy kalitlarni chatga yoki repozitoriyga yubormang.

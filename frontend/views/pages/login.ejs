@@ -33,6 +33,14 @@
       <h2 class="auth-title">Xush kelibsiz! 👋</h2>
       <p class="auth-subtitle">Profilingizga kirish uchun ma'lumotlaringizni kiriting</p>
 
+      <% if (googleOAuthEnabled) { %>
+      <a class="social-btn google-login-btn" href="/api/auth/google">
+        <i class="fa-brands fa-google" aria-hidden="true"></i>
+        Google bilan davom etish
+      </a>
+      <div class="divider">yoki email orqali</div>
+      <% } %>
+
       <form id="loginForm">
         <div class="form-group">
           <label class="form-label">Email Manzili</label>
@@ -58,8 +66,6 @@
           <i class="fa-solid fa-right-to-bracket"></i> Kirish
         </button>
       </form>
-
-      <div class="divider">yoki</div>
 
       <p style="text-align: center; font-size: 0.9rem; color: var(--gray); margin-top: 24px;">
         Hali hisobingiz yo'qmi? <a href="/register" style="color: var(--primary); font-weight: 600;">Ro'yxatdan o'tish</a>
