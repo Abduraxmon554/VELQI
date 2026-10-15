@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kod Mashqi | VELQI</title>
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+<%- include('../partials/navbar') %>
+
+<div class="container pg-wrap">
+  <div class="pg-head">
+    <div>
+      <h1><i class="fa-solid fa-code" style="color:var(--primary);"></i> Kod Mashqi</h1>
+      <p>Istalgan tilni tanlang, kod yozing va natijani darhol ko'ring.</p>
+    </div>
+  </div>
+
+  <div id="pgNotice" class="pg-notice" style="display:none;"></div>
+
+  <div class="pg-toolbar">
+    <select id="pgLang" aria-label="Til"></select>
+    <select id="pgExample" aria-label="Namuna"></select>
+    <span class="spacer"></span>
+    <button class="btn btn-outline-primary btn-sm" type="button" id="pgReset"><i class="fa-solid fa-rotate-left"></i> Tiklash</button>
+    <button class="btn btn-primary" type="button" id="pgRun"><i class="fa-solid fa-play"></i> Kodni Ishga Tushirish (Run)</button>
+  </div>
+
+  <div class="pg-task" id="pgTask"></div>
+
+  <div class="pg-grid">
+    <div class="pg-panel">
+      <div class="pg-panel-head">
+        <span class="pg-dots"><span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span><b id="pgFile" data-no-i18n>main.js</b></span>
+        <span class="pg-status" id="pgHint">Ctrl / ⌘ + Enter</span>
+      </div>
+      <textarea id="pgCode" class="pg-editor" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Kodni bu yerga yozing..."></textarea>
+      <textarea id="pgStdin" class="pg-stdin" spellcheck="false" placeholder="Kirish ma'lumotlari (stdin) — ixtiyoriy"></textarea>
+    </div>
+
+    <div class="pg-panel">
+      <div class="pg-panel-head">
+        <span>Konsol & Terminal Natijasi</span>
+        <span><span class="pg-status" id="pgStatus"></span> <button class="btn btn-outline-primary btn-sm" type="button" id="pgClear">Tozalash</button></span>
+      </div>
+      <pre id="pgOut" class="pg-out" data-no-i18n></pre>
+      <iframe id="pgPreview" class="pg-preview" sandbox="allow-scripts" style="display:none;" title="Preview"></iframe>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+<script src="/js/main.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/playground.js"></script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

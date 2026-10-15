@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biz Haqimizda | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+
+<%- include('../partials/navbar') %>
+
+<div class="about-hero">
+  <div class="container">
+    <h1 style="color:white; font-size:2.8rem; margin-bottom:16px;">Biz Haqimizda</h1>
+    <p style="font-size:1.15rem; opacity:0.9; max-width:600px; margin:0 auto;">
+      O'zbekistonda zamonaviy IT ta'limni har bir inson uchun qulay, amaliy va sifatli qilish bizning asosiy maqsadimizdir.
+    </p>
+  </div>
+</div>
+
+<div class="container" style="padding: 80px 20px;">
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; margin-bottom:80px;">
+    <div>
+      <div class="section-badge"><i class="fa-solid fa-bullseye"></i> Missiyamiz</div>
+      <h2 style="font-size:2.2rem; margin-bottom:18px;">Har bir yoshga IT kasbini berish</h2>
+      <p style="color:var(--dark-3); line-height:1.8; font-size:1rem; margin-bottom:14px;">
+        VELQI zamonaviy ta'lim standarti asosida tuzilgan bo'lib, Frontend, Node.js, AI, Backend, Dizayn va Kiberxavfsizlik sohalarida amaliy bilimlarni taqdim etadi.
+      </p>
+      <p style="color:var(--dark-3); line-height:1.8; font-size:1rem;">
+        Ayniqsa, <strong>Kiberxavfsizlik kursi</strong> 150 000 so'm/soat narxda. To'lov dars davomiyligiga qarab hisoblanadi.
+      </p>
+    </div>
+    <div style="background:linear-gradient(135deg, #667eea, #764ba2); border-radius:24px; padding:40px; color:white; text-align:center;">
+      <div style="font-size:4rem; margin-bottom:16px;">🇺🇿</div>
+      <h3 style="color:white; font-size:1.8rem; margin-bottom:10px;">Milliy IT Platforma</h3>
+      <p style="opacity:0.9; font-size:1rem; line-height:1.6;">
+        O'zbekistonning barcha viloyatlaridagi yoshlar uchun o'zbek tilida yuqori sifatli darslar.
+      </p>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | VELQI</title>
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+<%- include('../partials/navbar') %>
+
+<div class="container info-page">
+  <div class="info-hero">
+    <div class="info-icon"><i class="fa-solid <%= page.icon %>"></i></div>
+    <% ['uz','ru','en'].forEach(function(l){ %>
+      <h1 data-lang-block="<%= l %>"><%= page.title[l] %></h1>
+    <% }) %>
+  </div>
+
+  <% if (page.links) { %>
+    <div class="info-card">
+      <ul class="info-links">
+        <% page.links.forEach(function(item){ %>
+          <li><a href="<%= item[0] %>">
+            <% ['uz','ru','en'].forEach(function(l){ %><span data-lang-block="<%= l %>"><%= item[1][l] %></span><% }) %>
+          </a></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } else { %>
+    <% ['uz','ru','en'].forEach(function(l){ var c = page[l]; %>
+      <div data-lang-block="<%= l %>">
+        <p class="info-intro"><%= c.intro %></p>
+        <% c.sections.forEach(function(sec){ %>
+          <div class="info-card">
+            <h3><%= sec[0] %></h3>
+            <p><%= sec[1] %></p>
+          </div>
+        <% }) %>
+      </div>
+    <% }) %>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>
+<script src="/js/main.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

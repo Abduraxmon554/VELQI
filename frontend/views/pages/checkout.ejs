@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To'lov Sahifasi | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body style="background: var(--bg);">
+
+<%- include('../partials/navbar') %>
+
+<div class="checkout-page">
+  <div class="container">
+    <h1 style="font-size: 2rem; margin-bottom: 24px;">Xaridni Rasmiylashtirish 💳</h1>
+
+    <div class="checkout-layout">
+      <div>
+        <!-- To'lov usuli tanlash -->
+        <div class="checkout-section">
+          <h2 class="checkout-section-title"><i class="fa-solid fa-credit-card"></i> To'lov Tizimini Tanlang</h2>
+          
+          <div class="payment-methods">
+            <button type="button" class="payment-method-btn active" data-provider="click" disabled>
+              <i class="fa-solid fa-mobile-screen-button" style="color:#007bff;"></i>
+              <span>Click</span><small id="clickProviderStatus">Tekshirilmoqda…</small>
+            </button>
+            <button type="button" class="payment-method-btn" data-provider="payme" disabled>
+              <i class="fa-solid fa-wallet" style="color:#00b894;"></i>
+              <span>Payme</span><small id="paymeProviderStatus">Tekshirilmoqda…</small>
+            </button>
+          </div>
+
+          <div id="providerNotice" style="background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-top: 16px;">
+            <p id="providerMessage" style="margin: 0; font-size: 0.88rem; color: var(--dark-3);">
+              <i class="fa-solid fa-circle-info" style="color:var(--info);"></i>
+              Bepul kurslar darhol ochiladi. Pullik to‘lov uchun provayderning merchant akkaunti va server sozlamalari talab qilinadi.
+            </p>
+          </div>
+        </div>
+
+        <!-- Foydalanuvchi ma'lumotlari -->
+        <div class="checkout-section">
+          <h2 class="checkout-section-title"><i class="fa-solid fa-user-check"></i> Xaridor Ma'lumotlari</h2>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="form-group" style="margin:0;">
+              <label class="form-label">Ism</label>
+              <input type="text" id="buyerName" class="form-control" readonly>
+            </div>
+            <div class="form-group" style="margin:0;">
+              <label class="form-label">Email</label>
+              <input type="email" id="buyerEmail" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Xulosa -->
+      <div>
+        <div class="order-summary">
+          <h3 style="font-size: 1.2rem; margin-bottom: 16px;">Buyurtma Tarkibi</h3>
+          <div id="checkoutItemsList"></div>
+
+          <div class="order-totals">
+            <div class="order-total-row">
+              <span>Oraliq jami:</span>
+              <span id="subTotalText">0 so'm</span>
+            </div>
+            <div class="order-total-row">
+              <span>Chegirma:</span>
+              <span style="color:var(--success);">- 0 so'm</span>
+            </div>
+            <div class="order-total-row total">
+              <span>To'lanadigan summa:</span>
+              <span id="totalPayText" style="color:var(--primary); font-size:1.3rem;">0 so'm</span>
+            </div>
+          </div>
+
+          <button id="checkoutButton" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 20px;">
+            <i class="fa-solid fa-shield-check"></i> Click bilan davom etish
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script>
+let selectedMethod = 'click';
+let paymentProviders = {};
+
+function initCheckout() {
+  if (!AuthState.isLoggedIn()) {
+    window.location.href = '/login?redirect=/checkout';
+    return;
+  }
+  if (Cart.items.length === 0) {
+    window.location.href = '/cart';
+    return;
+  }
+
+  document.getElementById('buyerName').value = AuthState.user.name || '';
+  document.getElementById('buyerEmail').value = AuthState.user.email || '';
+
+  const list = document.getElementById('checkoutItemsList');
+  list.innerHTML = Cart.items.map(item => `
+    <div class="order-course-item">
+      <img src="${getCourseThumbnail(item)}" alt="${item.title}" class="order-course-thumb" onerror="this.src='/images/courses/general.svg'">
+      <div class="order-course-info">
+        <div class="order-course-title">${item.title}</div>
+        <div class="order-course-price">${formatPrice(item.isFree ? 0 : (item.currentPrice ?? item.price ?? 0))}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const total = Cart.total();
+  document.getElementById('subTotalText').textContent = formatPrice(total);
+  document.getElementById('totalPayText').textContent = formatPrice(total);
+  document.getElementById('checkoutButton').innerHTML =
+    `<i class="fa-solid fa-shield-check"></i> ${selectedMethod === 'click' ? 'Click' : 'Payme'} bilan davom etish`;
+  loadPaymentProviders();
+}
+
+async function loadPaymentProviders() {
+  try {
+    const result = await API.get('/payment/providers');
+    paymentProviders = result.data;
+    for (const provider of ['click', 'payme']) {
+      const status = document.getElementById(`${provider}ProviderStatus`);
+      const info = paymentProviders[provider];
+      status.textContent = info.enabled ? 'Ulangan' : 'Ulanmagan';
+      status.classList.toggle('provider-ready', info.enabled);
+      status.classList.toggle('provider-unavailable', !info.enabled);
+      const button = document.querySelector(`[data-provider="${provider}"]`);
+      button.disabled = !info.enabled;
+    }
+    const active = ['click', 'payme'].filter(provider => paymentProviders[provider].enabled);
+    document.getElementById('providerMessage').textContent = active.length
+      ? `${active.map(provider => provider === 'click' ? 'Click' : 'Payme').join(' va ')} orqali to‘lov tayyor.`
+      : 'To‘lov uchun serverda merchant sozlamalari va HTTPS domen manzili kiritilishi kerak.';
+    if (!paymentProviders[selectedMethod]?.enabled && active.length) {
+      const button = document.querySelector(`[data-provider="${active[0]}"]`);
+      selectPaymentMethod(active[0], button);
+    }
+  } catch (err) {
+    document.getElementById('providerMessage').textContent =
+      `To‘lov usullarini tekshirib bo‘lmadi: ${err.message}`;
+    Toast.error(err.message || 'To‘lov provayderlarini tekshirishda xatolik');
+  }
+}
+
+async function checkReturnedPayment() {
+  const orderId = new URLSearchParams(window.location.search).get('orderId');
+  if (!orderId) return;
+
+  try {
+    let orderStatus;
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+      const result = await API.get(`/payment/status/${encodeURIComponent(orderId)}`);
+      orderStatus = result.data.paymentStatus;
+      if (orderStatus !== 'pending' || attempt === 5) break;
+      await new Promise(resolve => setTimeout(resolve, 1500));
+    }
+    if (orderStatus === 'completed') {
+      Cart.clear();
+      Toast.success('To‘lov tasdiqlandi. Kurslaringiz profilingizda ochildi!');
+      window.history.replaceState({}, document.title, '/checkout');
+    } else if (orderStatus === 'pending') {
+      Toast.info('To‘lov provayder tomonidan hali tasdiqlanmadi. Bir ozdan so‘ng profilingizni tekshiring.');
+    } else {
+      Toast.error('To‘lov amalga oshmadi. Buyurtma holatini profilingizda ko‘rishingiz mumkin.');
+      window.history.replaceState({}, document.title, '/checkout');
+    }
+  } catch (err) {
+    Toast.error(err.message || 'Buyurtma holatini tekshirib bo‘lmadi.');
+  }
+}
+
+function selectPaymentMethod(method, btn) {
+  if (!btn || btn.disabled) return;
+  selectedMethod = method;
+  document.querySelectorAll('.payment-method-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('checkoutButton').innerHTML =
+    `<i class="fa-solid fa-shield-check"></i> ${method === 'click' ? 'Click' : 'Payme'} bilan davom etish`;
+}
+
+async function completePurchase() {
+  const freeCourses = Cart.items.filter(item => item.isFree);
+  const paidCourses = Cart.items.filter(item => !item.isFree);
+  Loading.show();
+  try {
+    for (const course of freeCourses) {
+      await API.post('/payment/enroll-free', { courseId: course._id });
+    }
+
+    if (paidCourses.length) {
+      const result = await API.post('/payment/checkout', {
+        paymentMethod: selectedMethod,
+        courseIds: paidCourses.map(course => course._id)
+      });
+      if (!result.checkoutUrl) {
+        throw new Error('To‘lov provayderi to‘lov havolasini qaytarmadi.');
+      }
+      window.location.assign(result.checkoutUrl);
+      return;
+    }
+
+    Cart.clear();
+    Toast.success('Bepul kursga muvaffaqiyatli yozildingiz! 🎉');
+    setTimeout(() => window.location.href = '/dashboard', 1500);
+  } catch (err) {
+    Toast.error(err.message || 'To\'lov jarayonida xatolik');
+  } finally {
+    Loading.hide();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initCheckout);
+document.addEventListener('DOMContentLoaded', checkReturnedPayment);
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-provider]').forEach(button => {
+    button.addEventListener('click', () => selectPaymentMethod(button.dataset.provider, button));
+  });
+  document.getElementById('checkoutButton').addEventListener('click', completePurchase);
+});
+</script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

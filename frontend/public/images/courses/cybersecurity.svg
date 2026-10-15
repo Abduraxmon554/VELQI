@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Cybersecurity">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111a32"/><stop offset="1" stop-color="#133f66"/></linearGradient><linearGradient id="shield" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#60a5fa"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs>
+  <rect width="800" height="450" rx="30" fill="url(#bg)"/><circle cx="110" cy="80" r="165" fill="#38bdf8" opacity=".08"/>
+  <path d="M400 72 548 125v91c0 96-64 148-148 184-84-36-148-88-148-184v-91z" fill="url(#shield)" opacity=".18" stroke="url(#shield)" stroke-width="8"/>
+  <path d="M400 147v-23m-56 88v-20a56 56 0 0 1 112 0v20m-130 0h148v100H326z" fill="none" stroke="#e0f2fe" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+  <circle cx="400" cy="263" r="9" fill="#e0f2fe"/><path d="M400 272v20" stroke="#e0f2fe" stroke-width="9" stroke-linecap="round"/>
+  <text x="400" y="410" fill="#fff" font-family="Arial,sans-serif" font-size="30" font-weight="700" text-anchor="middle">CYBERSECURITY • ETHICAL HACKING</text>
+</svg>

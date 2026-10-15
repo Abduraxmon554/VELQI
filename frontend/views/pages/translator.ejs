@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarjimon | VELQI</title>
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+<%- include('../partials/navbar') %>
+
+<div class="container tr-wrap">
+  <div class="info-hero">
+    <div class="info-icon"><i class="fa-solid fa-language"></i></div>
+    <h1>Tarjimon</h1>
+    <p class="info-intro">O'zbek, rus va ingliz tillari o'rtasida tez tarjima.</p>
+  </div>
+
+  <div class="tr-card">
+    <div class="tr-bar">
+      <select id="trFrom" aria-label="From" data-no-i18n>
+        <option value="uz">O'zbekcha</option><option value="ru">Русский</option><option value="en">English</option>
+      </select>
+      <button class="tr-swap" type="button" id="trSwap" title="⇄"><i class="fa-solid fa-right-left"></i></button>
+      <select id="trTo" aria-label="To" data-no-i18n>
+        <option value="ru">Русский</option><option value="en">English</option><option value="uz">O'zbekcha</option>
+      </select>
+      <button class="btn btn-primary" type="button" id="trGo"><i class="fa-solid fa-language"></i> Tarjima qilish</button>
+    </div>
+    <div class="tr-panes">
+      <div class="tr-pane">
+        <textarea id="trIn" maxlength="3000" placeholder="Tarjima qilinadigan matnni yozing..."></textarea>
+        <div class="tr-actions"><span id="trCount">0 / 3000</span><button class="btn btn-outline-primary btn-sm" type="button" id="trClear">Tozalash</button></div>
+      </div>
+      <div class="tr-pane">
+        <div id="trOut" class="tr-out placeholder" data-no-i18n>…</div>
+        <div class="tr-actions"><span id="trStatus"></span><button class="btn btn-outline-primary btn-sm" type="button" id="trCopy"><i class="fa-regular fa-copy"></i> Nusxa olish</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+<script src="/js/main.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/translator.js"></script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

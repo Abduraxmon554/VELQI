@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mening Profilim & Dashboard | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body style="background: var(--bg);">
+
+<%- include('../partials/navbar') %>
+
+<div class="dashboard">
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Asosiy Menyu</div>
+        <a href="/dashboard" class="sidebar-link active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a href="/my-courses" class="sidebar-link"><i class="fa-solid fa-book-open"></i> Kurslarim</a>
+        <a href="/wishlist" class="sidebar-link"><i class="fa-solid fa-heart"></i> Sevimlilar</a>
+        <a href="/cart" class="sidebar-link"><i class="fa-solid fa-cart-shopping"></i> Savatcha</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Sozlamalar</div>
+        <a href="/profile" class="sidebar-link"><i class="fa-solid fa-user-gear"></i> Profil Sozlamalari</a>
+        <button onclick="AuthState.logout()" class="sidebar-link logout-btn" style="width:100%; text-align:left; background:none; border:none; cursor:pointer;">
+          <i class="fa-solid fa-right-from-bracket"></i> Chiqish
+        </button>
+      </div>
+    </aside>
+
+    <!-- Asosiy Qism -->
+    <main class="dashboard-content">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 28px; flex-wrap:wrap; gap:16px;">
+        <div>
+          <h1 style="font-size: 1.8rem; margin:0;" id="dashGreeting">Xush kelibsiz! 👋</h1>
+          <p style="color:var(--gray); margin:4px 0 0 0; font-size:0.95rem;">Bugun bilim olishda yangi qadam tashlang</p>
+        </div>
+        <a href="/courses" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Yangi Kurs Tanlash</a>
+      </div>
+
+      <!-- Statistikalar -->
+      <div class="stats-cards">
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background:rgba(102,126,234,0.1); color:var(--primary);">
+            <i class="fa-solid fa-book"></i>
+          </div>
+          <div class="stat-card-info">
+            <strong id="statEnrolled">0</strong>
+            <span>Yozilgan Kurslar</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background:rgba(254,81,150,0.1); color:#fe5196;">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="stat-card-info">
+            <strong id="statLessons">0</strong>
+            <span>Xarid qilingan darslar</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background:rgba(72,187,120,0.1); color:var(--success);">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div class="stat-card-info">
+            <strong id="statCompleted">0</strong>
+            <span>Tugallangan</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background:rgba(246,173,85,0.1); color:var(--warning);">
+            <i class="fa-solid fa-certificate"></i>
+          </div>
+          <div class="stat-card-info">
+            <strong id="statCerts">0</strong>
+            <span>Sertifikatlar</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kiberxavfsizlik darslari va kurslar -->
+      <div class="card" style="padding: 24px; margin-bottom: 28px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2 style="font-size:1.25rem; margin:0;">Mening Kiberxavfsizlik va Alohida Darslarim</h2>
+          <span style="font-size:0.82rem; color:#fe5196; font-weight:700;">Kiberxavfsizlik: 150 000 so'm/soat</span>
+        </div>
+        <div id="purchasedLessonsList">
+          <p style="color:var(--gray); font-size:0.9rem;">Hozircha alohida sotib olingan darslar yo'q. <a href="/courses/kiberxavfsizlik-ethical-hacking" style="color:var(--primary); font-weight:600;">Kiberxavfsizlik kursini ko'rish</a></p>
+        </div>
+      </div>
+
+      <div class="card" style="padding: 24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2 style="font-size:1.25rem; margin:0;">Mening Faol Kurslarim</h2>
+          <a href="/courses" style="font-size:0.88rem; color:var(--primary); font-weight:600;">Barcha kurslar</a>
+        </div>
+        <div id="enrolledCoursesList" class="courses-grid">
+          <!-- Kurslar -->
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script>
+async function loadDashboard() {
+  if (!AuthState.isLoggedIn()) {
+    window.location.href = '/login?redirect=/dashboard';
+    return;
+  }
+
+  document.getElementById('dashGreeting').textContent = `Salom, ${AuthState.user.name || 'Talaba'}! 👋`;
+
+  try {
+    const res = await API.get('/users/dashboard');
+    const data = res.data;
+    const user = data.user;
+
+    document.getElementById('statEnrolled').textContent = user.enrolledCourses ? user.enrolledCourses.length : 0;
+    document.getElementById('statLessons').textContent = user.purchasedLessons ? user.purchasedLessons.length : 0;
+    document.getElementById('statCompleted').textContent = data.stats.completed || 0;
+    document.getElementById('statCerts').textContent = data.stats.certificates || 0;
+
+    // Alohida sotib olingan darslar (Kiberxavfsizlik va boshqalar)
+    const lessonsContainer = document.getElementById('purchasedLessonsList');
+    if (user.purchasedLessons && user.purchasedLessons.length > 0) {
+      lessonsContainer.innerHTML = user.purchasedLessons.map(pl => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border:1px solid var(--border); border-radius:var(--radius); margin-bottom:10px; background:var(--white);">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="width:36px; height:36px; border-radius:8px; background:rgba(254,81,150,0.1); color:#fe5196; display:flex; align-items:center; justify-content:center;">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+              <strong style="font-size:0.95rem; color:var(--dark);">${pl.lessonTitle || 'Dars'}</strong>
+              <span style="display:block; font-size:0.78rem; color:var(--gray);">To'lov: ${(pl.amount || 0).toLocaleString()} so'm</span>
+            </div>
+          </div>
+          <a href="/learn/${pl.course}?lessonId=${pl.lessonId}" class="btn btn-sm btn-primary">
+            <i class="fa-solid fa-play"></i> Darsni Ko'rish
+          </a>
+        </div>
+      `).join('');
+    }
+
+    // Yozilgan kurslar
+    const coursesContainer = document.getElementById('enrolledCoursesList');
+    if (user.enrolledCourses && user.enrolledCourses.length > 0) {
+      coursesContainer.innerHTML = user.enrolledCourses.map(e => {
+        const c = e.course;
+        if (!c) return '';
+        return `
+          <div class="course-card">
+            <div class="course-thumbnail">
+              <img src="${c.thumbnail || '/images/default-course.jpg'}" alt="${c.title}" onerror="this.src='/images/default-course.jpg'">
+            </div>
+            <div class="course-body">
+              <h3 class="course-title">${c.title}</h3>
+              <div style="margin-top:10px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:4px; color:var(--gray);">
+                  <span>Progress</span><span>${e.progress || 0}%</span>
+                </div>
+                <div class="progress-bar" style="height:6px;">
+                  <div class="progress-fill" style="width:${e.progress || 0}%;"></div>
+                </div>
+              </div>
+              <div style="margin-top:16px;">
+                <a href="/learn/${c._id}" class="btn btn-primary btn-sm" style="width:100%;">
+                  <i class="fa-solid fa-play"></i> Darsni Davom Ettirish
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } else {
+      coursesContainer.innerHTML = '<p style="color:var(--gray); grid-column:1/-1;">Siz hali hech qaysi to\'liq kursga yozilmadingiz. <a href="/courses" style="color:var(--primary); font-weight:600;">Kurslarni ko\'ring</a></p>';
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadDashboard);
+</script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

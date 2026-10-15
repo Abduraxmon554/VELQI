@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kurslarni Boshqarish | VELQI Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+
+<div class="admin-layout" data-admin-page="courses">
+  <%- include('../../partials/admin-nav') %>
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-page-title">Kurslarni Boshqarish</div>
+    </header>
+
+    <div class="admin-content">
+      <div class="card admin-table-card">
+        <div class="admin-section-heading">
+          <h3>Mavjud kurslar</h3>
+          <span class="status-badge status-active">Tariflar: 70 000 so'm/soat · kiberxavfsizlik 150 000 so'm/soat</span>
+        </div>
+        <form id="adminCourseForm" class="admin-create-form">
+          <label>Kurs nomi <input name="title" maxlength="100" required></label>
+          <label>Kategoriya
+            <select name="category" required>
+              <option value="frontend">Frontend</option>
+              <option value="nodejs">Node.js</option>
+              <option value="backend">Backend</option>
+              <option value="ai-ml">AI & ML</option>
+              <option value="design">Dizayn</option>
+              <option value="cybersecurity">Kiberxavfsizlik</option>
+              <option value="other">Boshqa</option>
+            </select>
+          </label>
+          <label class="admin-course-description">Qisqa tavsif <input name="description" maxlength="2000" required></label>
+          <button class="btn btn-primary" type="submit">Kurs qo‘shish</button>
+        </form>
+        <p id="adminMessage" class="admin-message" role="status"></p>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Kurs Nomi</th>
+                <th>Kategoriya</th>
+                <th>Narx (so'm/soat)</th>
+                <th>Talabalar</th>
+                <th>Holat</th>
+                <th>Amallar</th>
+              </tr>
+            </thead>
+            <tbody id="adminCourses"><tr><td colspan="6">Kurslar yuklanmoqda...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/main.js"></script>
+<script src="/js/admin.js"></script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

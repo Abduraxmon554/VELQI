@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foydalanuvchilar | VELQI Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+
+<div class="admin-layout" data-admin-page="users">
+  <%- include('../../partials/admin-nav') %>
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-page-title">Foydalanuvchilarni Boshqarish</div>
+    </header>
+
+    <div class="admin-content">
+      <div class="card admin-table-card">
+        <h3>Ro‘yxatdan o‘tgan foydalanuvchilar</h3>
+        <p id="adminMessage" class="admin-message" role="status"></p>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Foydalanuvchi</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Holat</th>
+                <th>Amal</th>
+              </tr>
+            </thead>
+            <tbody id="adminUsers"><tr><td colspan="5">Foydalanuvchilar yuklanmoqda...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/main.js"></script>
+<script src="/js/admin.js"></script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

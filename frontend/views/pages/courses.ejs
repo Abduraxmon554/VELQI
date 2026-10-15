@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kurslar Katalogi | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+
+<%- include('../partials/navbar') %>
+
+<div style="padding-top: calc(var(--navbar-height) + 30px); background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding-bottom: 40px;">
+  <div class="container">
+    <div style="max-width: 700px;">
+      <div class="section-badge" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff;">
+        <i class="fa-solid fa-graduation-cap"></i> Barcha Yo'nalishlar
+      </div>
+      <h1 style="color: white; margin-bottom: 12px; font-size: 2.4rem;">Professional IT & Dizayn Kurslari</h1>
+      <p style="color: rgba(255,255,255,0.8); font-size: 1.05rem;">
+        Frontend, Node.js, AI, Backend, Grafik Dizayn va Kiberxavfsizlik kurslari. Har bir dars amaliyot va real keyslar asosida.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="padding-top: 40px; padding-bottom: 80px;">
+  <div class="courses-layout">
+    <!-- Filter Sidebar -->
+    <aside class="filter-sidebar">
+      <div class="filter-section">
+        <h3 class="filter-title">Yo'nalishlar (Kategoriyalar)</h3>
+        <label class="filter-option">
+          <input type="radio" name="categoryFilter" value="all" checked onchange="handleFilterChange()">
+          <span>Barcha kurslar</span>
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="categoryFilter" value="cybersecurity" onchange="handleFilterChange()">
+          <span>🛡️ Kiberxavfsizlik (150 000 so'm/soat)</span>
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="categoryFilter" value="frontend" onchange="handleFilterChange()">
+          <span>💻 Frontend Dasturlash</span>
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="categoryFilter" value="nodejs" onchange="handleFilterChange()">
+          <span>🟩 Node.js</span>
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="categoryFilter" value="ai-ml" onchange="handleFilterChange()">
+          <span>🧠 AI & Machine Learning</span>
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="categoryFilter" value="backend" onchange="handleFilterChange()">
+          <span>⚙️ Backend Dasturlash</span>
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="categoryFilter" value="design" onchange="handleFilterChange()">
+          <span>🎨 Grafik Dizayn</span>
+        </label>
+      </div>
+
+      <div class="filter-section">
+        <h3 class="filter-title">Daraja</h3>
+        <label class="filter-option">
+          <input type="checkbox" value="beginner" onchange="handleFilterChange()">
+          <span>Boshlang'ich</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" value="intermediate" onchange="handleFilterChange()">
+          <span>O'rta daraja</span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" value="advanced" onchange="handleFilterChange()">
+          <span>Professional</span>
+        </label>
+      </div>
+
+      <div class="filter-section">
+        <h3 class="filter-title">To'lov Turi</h3>
+        <label class="filter-option">
+          <input type="radio" name="priceFilter" value="all" checked onchange="handleFilterChange()">
+          <span>Barchasi</span>
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="priceFilter" value="per_lesson" onchange="handleFilterChange()">
+          <span>Darsbay to'lov (70 000 so'm/soat)</span>
+        </label>
+        <label class="filter-option">
+          <input type="radio" name="priceFilter" value="free" onchange="handleFilterChange()">
+          <span>Bepul kurslar</span>
+        </label>
+      </div>
+
+      <button class="btn btn-outline-primary" style="width: 100%;" onclick="resetFilters()">Filtrlarni tozalash</button>
+    </aside>
+
+    <!-- Kurslar ro'yxati -->
+    <div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+        <div style="font-weight: 600; color: var(--dark-3);" id="courseCountText">
+          Kurslar yuklanmoqda...
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <label style="font-size: 0.88rem; color: var(--gray);">Saralash:</label>
+          <select id="sortSelect" onchange="handleFilterChange()" style="padding: 8px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); font-size: 0.9rem; outline: none;">
+            <option value="popular">Eng ommabop</option>
+            <option value="newest">Yangi kurslar</option>
+            <option value="rating">Yuqori baholangan</option>
+            <option value="price-low">Narxi: Arzondan qimmatga</option>
+            <option value="price-high">Narxi: Qimmatdan arzonga</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Kiberxavfsizlik maxsus e'lon kartasi -->
+      <div id="cyberSecNotice" style="background: linear-gradient(135deg, rgba(247, 112, 98, 0.1), rgba(254, 81, 150, 0.1)); border: 2px dashed #fe5196; border-radius: var(--radius-lg); padding: 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #f77062, #fe5196); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h4 style="margin: 0; font-size: 1.05rem; color: #fe5196;">Kiberxavfsizlik kursi: Darsbay to'lov imkoniyati!</h4>
+            <p style="margin: 4px 0 0; font-size: 0.88rem; color: var(--dark-3);">
+              Kurslar: <strong>70 000 so'm/soat</strong>, kiberxavfsizlik: <strong>150 000 so'm/soat</strong>. Dars davomiyligiga qarab to'lov hisoblanadi.
+            </p>
+          </div>
+        </div>
+        <a href="/courses/kiberxavfsizlik-ethical-hacking" class="btn btn-primary btn-sm">Batafsil ko'rish</a>
+      </div>
+
+      <div class="courses-grid" id="coursesGrid">
+        <!-- Kurslar JavaScript bilan chiqariladi -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script>
+let allCourses = [];
+
+async function loadCourses() {
+  const grid = document.getElementById('coursesGrid');
+  grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px;"><i class="fa-solid fa-spinner fa-spin fa-2x" style="color: var(--primary);"></i><p style="margin-top: 10px;">Kurslar yuklanmoqda...</p></div>';
+
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+    const searchParam = urlParams.get('search');
+
+    if (categoryParam) {
+      const radio = document.querySelector(`input[name="categoryFilter"][value="${categoryParam}"]`);
+      if (radio) radio.checked = true;
+    }
+
+    const res = await API.get(`/courses${window.location.search}`);
+    allCourses = res.data || [];
+    renderCourses(allCourses);
+  } catch (err) {
+    allCourses = [];
+    renderCourses(allCourses);
+    Toast.error('Kurslarni yuklab bo‘lmadi. Server ishlayotganini tekshirib, sahifani qayta yuklang.');
+  }
+}
+
+function renderCourses(courses) {
+  const grid = document.getElementById('coursesGrid');
+  const countText = document.getElementById('courseCountText');
+  countText.textContent = `${courses.length} ta kurs topildi`;
+
+  if (courses.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state" style="grid-column: 1/-1;">
+        <div class="empty-state-icon">🔍</div>
+        <h3>Hech qanday kurs topilmadi</h3>
+        <p>Iltimos, boshqa filtrlarni tanlab ko'ring</p>
+        <button class="btn btn-outline-primary" onclick="resetFilters()">Filtrlarni tozalash</button>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = courses.map(course => {
+    const isCyber = course.category === 'cybersecurity';
+    const hourlyRate = isCyber ? 150000 : 70000;
+    const priceText = course.isFree ? '<span class="price-free">Bepul</span>' :
+      `<span class="price-current">${formatPrice(hourlyRate)} / soat</span>`;
+
+    return `
+      <div class="course-card">
+        <div class="course-thumbnail">
+          <img src="${getCourseThumbnail(course)}" alt="${course.title}" onerror="this.src='/images/courses/general.svg'">
+          ${isCyber ? '<span class="course-badge badge-bestseller" style="background:#fe5196;color:#fff;">150k so\'m / soat</span>' : ''}
+          ${course.bestseller && !isCyber ? '<span class="course-badge badge-bestseller">Bestseller</span>' : ''}
+          ${course.isFree ? '<span class="course-badge badge-free">Bepul</span>' : ''}
+        </div>
+        <div class="course-body">
+          <div class="course-category">
+            ${getCategoryIcon(course.category)}
+            ${course.category}
+          </div>
+          <h3 class="course-title">
+            <a href="/courses/${course.slug || course._id}">${course.title}</a>
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+            ${course.shortDescription || course.description || ''}
+          </p>
+          <div class="course-meta">
+            <div class="course-rating">
+              ${renderStars(course.rating || 4.8)}
+              <span class="rating-num">${(course.rating || 4.8).toFixed(1)}</span>
+            </div>
+            <span><i class="fa-solid fa-play-circle"></i> ${course.totalLessons || 10} dars</span>
+          </div>
+          <div class="course-footer">
+            <div class="course-price">
+              ${priceText}
+            </div>
+            <a href="/courses/${course.slug || course._id}" class="btn btn-primary btn-sm">
+              ${isCyber ? 'Darslarni tanlash' : 'Ko\'rish'}
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function handleFilterChange() {
+  const category = document.querySelector('input[name="categoryFilter"]:checked')?.value || 'all';
+  const priceType = document.querySelector('input[name="priceFilter"]:checked')?.value || 'all';
+
+  let filtered = [...allCourses];
+  if (category !== 'all') {
+    filtered = filtered.filter(c => c.category === category);
+  }
+  if (priceType === 'free') {
+    filtered = filtered.filter(c => c.isFree);
+  } else if (priceType === 'per_lesson') {
+    filtered = filtered.filter(c => c.category === 'cybersecurity' || c.allowSingleLessonPurchase);
+  }
+
+  renderCourses(filtered);
+}
+
+function resetFilters() {
+  document.querySelector('input[name="categoryFilter"][value="all"]').checked = true;
+  document.querySelector('input[name="priceFilter"][value="all"]').checked = true;
+  renderCourses(allCourses);
+}
+
+document.addEventListener('DOMContentLoaded', loadCourses);
+</script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

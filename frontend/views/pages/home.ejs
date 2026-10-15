@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VELQI - O'zbekistondagi eng yaxshi online ta'lim platformasi. Frontend, Node.js, AI, Backend, Dizayn, Kiberxavfsizlik kurslari.">
+  <meta name="keywords" content="online kurslar, dasturlash, AI, kiberxavfsizlik, dizayn, uzbekistan">
+  <meta property="og:title" content="VELQI - Online Ta'lim Platformasi">
+  <meta property="og:description" content="Professional kurslar, tajribali o'qituvchilar va sertifikatlar bilan kelajagingizni quring.">
+  <meta name="theme-color" content="#667eea">
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <title>VELQI - Online Ta'lim Platformasi</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+
+<%- include('../partials/navbar') %>
+
+<!-- HERO SECTION -->
+<section class="hero-section" id="hero">
+  <div class="container">
+    <div class="hero-container">
+      <div class="hero-text reveal">
+        <div class="hero-pill">
+          <i class="fa-solid fa-bolt"></i>
+          O'zbekistondagi #1 Online Ta'lim Platformasi
+        </div>
+        
+        <h1 class="hero-heading">
+          Kelajagingizni<br>
+          <span class="highlight">Texnologiya</span><br>
+          Bilan Quring
+        </h1>
+        
+        <p class="hero-para">
+          Frontend, Node.js, AI, Backend, Grafik Dizayn va Kiberxavfsizlik bo'yicha 
+          professional kurslar. Tajribali o'qituvchilar, real loyihalar va sertifikatlar bilan 
+          kelajagingizni bugun boshlab quring!
+        </p>
+        
+        <!-- Search Bar -->
+        <div class="hero-search">
+          <i class="fa-solid fa-search" style="color: #a0aec0"></i>
+          <input type="text" placeholder="Qaysi kursni o'rganmoqchisiz?" id="heroSearch">
+          <button onclick="heroSearchAction()">Qidirish</button>
+        </div>
+        
+        <div class="hero-btns">
+          <a href="/courses" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-graduation-cap"></i> Kurslarni Ko'rish
+          </a>
+          <a href="/register" class="btn btn-white btn-lg">
+            <i class="fa-solid fa-play"></i> Bepul Boshlash
+          </a>
+        </div>
+        
+        <div class="hero-counter">
+          <div class="counter-item">
+            <span class="counter-num" data-counter="50000">0</span>
+            <span class="counter-label">O'quvchilar</span>
+          </div>
+          <div class="counter-item">
+            <span class="counter-num" data-counter="200">0</span>
+            <span class="counter-label">Kurslar</span>
+          </div>
+          <div class="counter-item">
+            <span class="counter-num" data-counter="150">0</span>
+            <span class="counter-label">O'qituvchilar</span>
+          </div>
+          <div class="counter-item">
+            <span class="counter-num" data-counter="98">0</span>
+            <span class="counter-label">% Mamnunlik</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Hero Right: VELQI brand artwork -->
+      <div class="hero-right">
+        <img
+          class="hero-artwork"
+          src="/images/velqi-neon-planetary-orbit.png"
+          alt="VELQI — neon sayyora orbitasi fonidagi brend tasviri"
+          fetchpriority="high"
+        >
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scroll indicator -->
+  <div style="position:absolute;bottom:30px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.5);text-align:center;animation:bounce 2s infinite">
+    <i class="fa-solid fa-chevron-down"></i>
+  </div>
+</section>
+
+<!-- CATEGORIES SECTION -->
+<section class="categories" id="categories">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge">
+        <i class="fa-solid fa-layer-group"></i> Kategoriyalar
+      </div>
+      <h2 class="section-title">Qaysi Sohani <span class="text-gradient">O'rganmoqchisiz?</span></h2>
+      <p class="section-desc">6 ta asosiy yo'nalish bo'yicha professional kurslar mavjud. O'zingizga mos yo'nalishni tanlang!</p>
+    </div>
+    
+    <div class="categories-grid">
+      <a href="/courses?category=frontend" class="category-card reveal">
+        <div class="category-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c)">
+          <i class="fa-solid fa-code"></i>
+        </div>
+        <div class="category-name">Frontend Dasturlash</div>
+        <div class="category-count">45+ kurs</div>
+      </a>
+      
+      <a href="/courses?category=nodejs" class="category-card reveal">
+        <div class="category-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe)">
+          <i class="fa-brands fa-node-js"></i>
+        </div>
+        <div class="category-name">Node.js</div>
+        <div class="category-count">32+ kurs</div>
+      </a>
+      
+      <a href="/courses?category=ai-ml" class="category-card reveal">
+        <div class="category-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7)">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+        <div class="category-name">AI & Machine Learning</div>
+        <div class="category-count">28+ kurs</div>
+      </a>
+      
+      <a href="/courses?category=backend" class="category-card reveal">
+        <div class="category-icon" style="background: linear-gradient(135deg, #fa709a, #fee140)">
+          <i class="fa-solid fa-server"></i>
+        </div>
+        <div class="category-name">Backend Dasturlash</div>
+        <div class="category-count">38+ kurs</div>
+      </a>
+      
+      <a href="/courses?category=design" class="category-card reveal">
+        <div class="category-icon" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb)">
+          <i class="fa-solid fa-palette"></i>
+        </div>
+        <div class="category-name">Grafik Dizayn</div>
+        <div class="category-count">25+ kurs</div>
+      </a>
+      
+      <a href="/courses?category=cybersecurity" class="category-card reveal">
+        <div class="category-icon" style="background: linear-gradient(135deg, #f77062, #fe5196)">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div class="category-name">Kiberxavfsizlik</div>
+        <div class="category-count">20+ kurs</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED COURSES -->
+<section class="courses-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge">
+        <i class="fa-solid fa-fire"></i> Mashhur Kurslar
+      </div>
+      <h2 class="section-title">Eng <span class="text-gradient">Mashhur</span> Kurslar</h2>
+      <p class="section-desc">Minglab o'quvchilar tomonidan yuqori baho olgan professional kurslar</p>
+    </div>
+    
+    <div class="tabs">
+      <button class="tab-btn active" onclick="filterCourses('all', this)">Barchasi</button>
+      <button class="tab-btn" onclick="filterCourses('frontend', this)">Frontend</button>
+      <button class="tab-btn" onclick="filterCourses('nodejs', this)">Node.js</button>
+      <button class="tab-btn" onclick="filterCourses('ai-ml', this)">AI & ML</button>
+      <button class="tab-btn" onclick="filterCourses('backend', this)">Backend</button>
+      <button class="tab-btn" onclick="filterCourses('design', this)">Dizayn</button>
+      <button class="tab-btn" onclick="filterCourses('cybersecurity', this)">Kiberxavfsizlik</button>
+    </div>
+    
+    <div class="courses-grid" id="featuredCourses">
+      <!-- JS bilan to'ldiriladi -->
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-thumb"></div>
+        <div class="skeleton-body">
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-line medium"></div>
+          <div class="skeleton skeleton-line short"></div>
+        </div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-thumb"></div>
+        <div class="skeleton-body">
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-line medium"></div>
+          <div class="skeleton skeleton-line short"></div>
+        </div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-thumb"></div>
+        <div class="skeleton-body">
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-line medium"></div>
+          <div class="skeleton skeleton-line short"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="text-align:center; margin-top:40px">
+      <a href="/courses" class="btn btn-outline-primary btn-lg">
+        Barcha Kurslarni Ko'rish <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS SECTION -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-num" data-counter="50000">0+</div>
+        <div class="stat-label">🎓 O'quvchilar</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-counter="200">0+</div>
+        <div class="stat-label">📚 Kurslar</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-counter="150">0+</div>
+        <div class="stat-label">👨‍🏫 O'qituvchilar</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-counter="45000">0+</div>
+        <div class="stat-label">🏆 Sertifikatlar</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-counter="98">0%</div>
+        <div class="stat-label">⭐ Mamnunlik</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section style="padding:80px 0; background: var(--bg)">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><i class="fa-solid fa-star"></i> Nima Uchun Biz?</div>
+      <h2 class="section-title">VELQI <span class="text-gradient">Afzalliklari</span></h2>
+      <p class="section-desc">Biz faqat kurs bermaymiz - biz sizni muvaffaqiyatga olib boramiz!</p>
+    </div>
+    
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px">
+      <div class="card reveal" style="padding:32px; text-align:center">
+        <div style="width:70px;height:70px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.8rem;color:white">
+          <i class="fa-solid fa-terminal"></i>
+        </div>
+        <h3 style="font-size:1.1rem;margin-bottom:10px">Interfaol CLI & Buyruqlar</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6">Videolarsiz, 100% amaliy terminal buyruqlari va interfaol kod muhiti orqali o'rganing.</p>
+      </div>
+      
+      <div class="card reveal" style="padding:32px; text-align:center">
+        <div style="width:70px;height:70px;background:linear-gradient(135deg,#43e97b,#38f9d7);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.8rem;color:white">
+          <i class="fa-solid fa-certificate"></i>
+        </div>
+        <h3 style="font-size:1.1rem;margin-bottom:10px">Sertifikatlar</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6">Kurs tugagandan so'ng sertifikat oling. Ish beruvchilar tomonidan tan olinadi.</p>
+      </div>
+      
+      <div class="card reveal" style="padding:32px; text-align:center">
+        <div style="width:70px;height:70px;background:linear-gradient(135deg,#f093fb,#f5576c);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.8rem;color:white">
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <h3 style="font-size:1.1rem;margin-bottom:10px">24/7 Yordam</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6">Savollaringiz bo'lsa, bizning jamoa 24/7 yordam berishga tayyor.</p>
+      </div>
+      
+      <div class="card reveal" style="padding:32px; text-align:center">
+        <div style="width:70px;height:70px;background:linear-gradient(135deg,#4facfe,#00f2fe);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.8rem;color:white">
+          <i class="fa-solid fa-mobile-screen"></i>
+        </div>
+        <h3 style="font-size:1.1rem;margin-bottom:10px">Mobil Qurilmalar</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6">Telefon, planshet yoki kompyuter - istalgan qurilmadan o'rganing.</p>
+      </div>
+      
+      <div class="card reveal" style="padding:32px; text-align:center">
+        <div style="width:70px;height:70px;background:linear-gradient(135deg,#fa709a,#fee140);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.8rem;color:white">
+          <i class="fa-solid fa-infinity"></i>
+        </div>
+        <h3 style="font-size:1.1rem;margin-bottom:10px">Cheksiz Kirish</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6">Bir marta sotib oling, umr bo'yi foydalaning. Yangilanishlar bepul.</p>
+      </div>
+      
+      <div class="card reveal" style="padding:32px; text-align:center">
+        <div style="width:70px;height:70px;background:linear-gradient(135deg,#a18cd1,#fbc2eb);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:1.8rem;color:white">
+          <i class="fa-solid fa-shield-check"></i>
+        </div>
+        <h3 style="font-size:1.1rem;margin-bottom:10px">Kafolat</h3>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.6">30 kun ichida mamnun bo'lmasangiz, pulni qaytarib beramiz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge"><i class="fa-solid fa-quote-left"></i> Fikrlar</div>
+      <h2 class="section-title">O'quvchilarimiz <span class="text-gradient">Nima Deydi?</span></h2>
+      <p class="section-desc">Minglab o'quvchilarimizning hayotini o'zgartirishga yordam berdik</p>
+    </div>
+    
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-rating">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="testimonial-text">"VELQI orqali React kursini o'rgandim va 3 oydan keyin Google'da ish topdim. Kurslar juda sifatli va tushuntirish aniq. Barcha dasturchilar uchun tavsiya qilaman!"</p>
+        <div class="testimonial-author">
+          <img src="/images/testimonial-1.svg" alt="Aziz">
+          <div>
+            <strong>Aziz Karimov</strong>
+            <span>Frontend Developer @ Google</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card reveal">
+        <div class="testimonial-rating">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="testimonial-text">"AI va Machine Learning kursini tugatdim. Endi o'zim ML loyihalar yaratyapman. O'qituvchi juda professional, tushuntirishi tushunarli va amaliy."</p>
+        <div class="testimonial-author">
+          <img src="/images/testimonial-2.svg" alt="Malika">
+          <div>
+            <strong>Malika Yusupova</strong>
+            <span>AI Engineer @ Yandex</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card reveal">
+        <div class="testimonial-rating">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+        </div>
+        <p class="testimonial-text">"Kiberxavfsizlik kursini o'rganib, hozir kompaniyamizda IT xavfsizlik bo'yicha ishlayapman. Kurs juda to'liq va amaliy. CTF mashqlari ayniqsa foydali bo'ldi!"</p>
+        <div class="testimonial-author">
+          <img src="/images/testimonial-3.svg" alt="Bobur">
+          <div>
+            <strong>Bobur Toshmatov</strong>
+            <span>Security Analyst @ Bank</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section style="padding:80px 0; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; text-align:center">
+  <div class="container">
+    <div class="reveal">
+      <div style="font-size:3rem;margin-bottom:16px">🚀</div>
+      <h2 style="color:white;font-size:2.5rem;margin-bottom:16px">Bugunoq Boshlang!</h2>
+      <p style="font-size:1.1rem;opacity:0.9;max-width:500px;margin:0 auto 36px;line-height:1.7">
+        Minglab o'quvchilarimiz qatori sizning ham hayotingizni o'zgartirish imkoni bor. 
+        Birinchi kurs bepul!
+      </p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <a href="/register" class="btn btn-white btn-lg">
+          <i class="fa-solid fa-rocket"></i> Bepul Ro'yxatdan O'tish
+        </a>
+        <a href="/courses" class="btn btn-lg" style="border:2px solid rgba(255,255,255,0.5);color:white;background:rgba(255,255,255,0.1)">
+          <i class="fa-solid fa-book-open"></i> Kurslarni Ko'rish
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+// Hero search
+function heroSearchAction() {
+  const query = document.getElementById('heroSearch').value.trim();
+  if (query) {
+    window.location.href = `/courses?search=${encodeURIComponent(query)}`;
+  }
+}
+
+document.getElementById('heroSearch')?.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') heroSearchAction();
+});
+
+// Load featured courses
+let currentCategory = 'all';
+
+async function loadFeaturedCourses(category = 'all') {
+  const container = document.getElementById('featuredCourses');
+  
+  // Show skeletons
+  container.innerHTML = Array(6).fill(`
+    <div class="skeleton-card">
+      <div class="skeleton skeleton-thumb"></div>
+      <div class="skeleton-body">
+        <div class="skeleton skeleton-line"></div>
+        <div class="skeleton skeleton-line medium"></div>
+        <div class="skeleton skeleton-line short"></div>
+      </div>
+    </div>
+  `).join('');
+  
+  try {
+    const params = new URLSearchParams({ limit: 6 });
+    if (category !== 'all') params.append('category', category);
+    params.append('sort', 'popular');
+    
+    const result = await API.get(`/courses?${params}`);
+    
+    if (!result.data || result.data.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state" style="grid-column:1/-1">
+          <div class="empty-state-icon">📚</div>
+          <h3>Kurslar topilmadi</h3>
+          <p>Bu kategoriyada hozircha kurslar yo'q</p>
+        </div>
+      `;
+      return;
+    }
+    
+    container.innerHTML = result.data.map(course => createCourseCard(course)).join('');
+    
+  } catch (err) {
+    // Demo kurslar
+    container.innerHTML = getDemoCourses().map(course => createCourseCard(course)).join('');
+  }
+}
+
+function filterCourses(category, btn) {
+  currentCategory = category;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadFeaturedCourses(category);
+}
+
+function getDemoCourses() {
+  return [
+    {
+      _id: '1',
+      title: 'React.js - To\'liq Kurs: Boshlang\'ichdan Professionalgacha',
+      slug: 'react-js-full-course',
+      category: 'frontend',
+      price: 70000,
+      currentPrice: 70000,
+      thumbnail: null,
+      rating: 4.8,
+      numReviews: 1247,
+      enrolledStudents: 8450,
+      totalLessons: 142,
+      bestseller: true,
+      instructor: { name: 'Jasur Xoliqov', avatar: null }
+    },
+    {
+      _id: '2',
+      title: 'Node.js va Express - REST API Yaratish',
+      slug: 'nodejs-express-api',
+      category: 'nodejs',
+      price: 70000,
+      currentPrice: 70000,
+      rating: 4.9,
+      numReviews: 892,
+      enrolledStudents: 5231,
+      totalLessons: 98,
+      thumbnail: null,
+      instructor: { name: 'Sherzod Raximov', avatar: null }
+    },
+    {
+      _id: '3',
+      title: 'Machine Learning va AI - Python bilan',
+      slug: 'machine-learning-python',
+      category: 'ai-ml',
+      price: 70000,
+      currentPrice: 70000,
+      thumbnail: null,
+      rating: 4.7,
+      numReviews: 634,
+      enrolledStudents: 3872,
+      totalLessons: 180,
+      instructor: { name: 'Dilnoza Yusupova', avatar: null }
+    },
+    {
+      _id: '4',
+      title: 'Kiberxavfsizlik - Ethical Hacking va Penetration Testing',
+      slug: 'ethical-hacking-pentesting',
+      category: 'cybersecurity',
+      price: 150000,
+      currentPrice: 150000,
+      thumbnail: null,
+      rating: 4.9,
+      numReviews: 423,
+      enrolledStudents: 2156,
+      totalLessons: 210,
+      bestseller: true,
+      instructor: { name: 'Amir Nazarov', avatar: null }
+    },
+    {
+      _id: '5',
+      title: 'Figma & UI/UX Dizayn - Boshliqdan Professionalgacha',
+      slug: 'figma-uiux-design',
+      category: 'design',
+      price: 70000,
+      currentPrice: 70000,
+      thumbnail: null,
+      rating: 4.8,
+      numReviews: 712,
+      enrolledStudents: 4890,
+      totalLessons: 115,
+      instructor: { name: 'Nargiza Tosheva', avatar: null }
+    },
+    {
+      _id: '6',
+      title: 'Python Django - Backend Web Dasturlash',
+      slug: 'python-django-backend',
+      category: 'backend',
+      price: 0,
+      currentPrice: 0,
+      isFree: true,
+      thumbnail: null,
+      rating: 4.6,
+      numReviews: 1893,
+      enrolledStudents: 12450,
+      totalLessons: 65,
+      instructor: { name: 'Ulugbek Sotvoldiyev', avatar: null }
+    }
+  ];
+}
+
+// Init
+loadFeaturedCourses();
+</script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kurs Tafsilotlari | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+
+<%- include('../partials/navbar') %>
+
+<!-- COURSE HERO -->
+<section class="course-hero" id="courseHero">
+  <div class="container">
+    <div class="course-hero-content">
+      <div class="course-hero-left">
+        <div class="course-crumbs">
+          <a href="/">Bosh sahifa</a> <i class="fa-solid fa-chevron-right"></i>
+          <a href="/courses">Kurslar</a> <i class="fa-solid fa-chevron-right"></i>
+          <span id="heroCategoryName">Yuklanmoqda...</span>
+        </div>
+        <img id="courseHeroImage" class="course-hero-image" src="/images/courses/general.svg" alt="Kurs rasmi">
+        <h1 class="course-hero-title" id="courseTitle">Kurs yuklanmoqda...</h1>
+        <p class="course-hero-desc" id="courseShortDesc"></p>
+
+        <div class="course-hero-meta">
+          <span id="courseRatingBadge" class="rating-badge"><i class="fa-solid fa-star"></i> 4.9</span>
+          <span><i class="fa-solid fa-user-tie"></i> <strong id="instructorName">Ustoz</strong></span>
+          <span><i class="fa-solid fa-clock"></i> <span id="courseDuration">20 soat</span></span>
+          <span><i class="fa-solid fa-layer-group"></i> <span id="courseLessonsCount">10 dars</span></span>
+          <span><i class="fa-solid fa-globe"></i> O'zbek tili</span>
+        </div>
+
+        <div id="cyberSecSpecialBanner" style="display:none; background: rgba(254, 81, 150, 0.2); border: 1.5px solid #fe5196; border-radius: 12px; padding: 14px 18px; margin-top: 15px; color: #fff;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <i class="fa-solid fa-shield-halved" style="font-size:1.5rem; color:#fe5196;"></i>
+            <div>
+              <strong style="display:block; font-size:1rem; color:#fe5196;">Kiberxavfsizlik: Darsbay to'lov imkoniyati mavjud!</strong>
+              <span style="font-size:0.88rem; opacity:0.9;">
+                Kiberxavfsizlik darslari <strong>150 000 so'm/soat</strong>. To'lov dars davomiyligiga qarab hisoblanadi.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky Card -->
+      <div class="course-card-sticky">
+        <div class="price-display">
+          <div id="coursePriceContainer">
+            <span class="price-big" id="courseMainPrice">Yuklanmoqda...</span>
+          </div>
+          <div id="perLessonPriceNotice" style="display:none; margin-top: 6px; font-size: 0.9rem; color: #fe5196; font-weight: 700;">
+            🔥 Dars narxi: 70 000 so'm/soat
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-enroll" id="btnFullEnroll">
+          <i class="fa-solid fa-cart-shopping"></i> Kursga Yozilish
+        </button>
+
+        <button class="btn-wishlist-course" id="btnWishlist">
+          <i class="fa-regular fa-heart"></i> Sevimlilarga qo'shish
+        </button>
+
+        <div class="course-includes">
+          <h4>Kurs tarkibi:</h4>
+          <div class="include-item"><i class="fa-solid fa-terminal"></i> Interfaol terminal va CLI buyruqlar</div>
+          <div class="include-item"><i class="fa-solid fa-file-code"></i> Amaliy laboratoriya buyruqlari</div>
+          <div class="include-item"><i class="fa-solid fa-infinity"></i> Umrbod kirish huquqi</div>
+          <div class="include-item"><i class="fa-solid fa-certificate"></i> Rasmiy yakuniy sertifikat</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TABS / CONTENT -->
+<section class="course-tabs-section">
+  <div class="container">
+    <div class="course-tabs-layout">
+      <div>
+        <!-- Tavsif -->
+        <div class="card" style="padding: 28px; margin-bottom: 28px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 16px;">Kurs haqida</h2>
+          <div id="courseFullDesc" style="line-height: 1.8; color: var(--dark-3);"></div>
+          
+          <h3 style="font-size: 1.15rem; margin-top: 24px; margin-bottom: 12px;">Kursda nimalarni o'rganasiz:</h3>
+          <div id="courseWhatYouLearn" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
+        </div>
+
+        <!-- DARS REJASI VA BIR DARS 100K SOTIB OLISH -->
+        <div class="card" style="padding: 28px; margin-bottom: 28px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+            <div>
+              <h2 style="font-size: 1.4rem; margin:0;">Kurs Darslar Rejasi</h2>
+              <p style="margin:4px 0 0; font-size:0.88rem; color:var(--gray);">
+                Barcha darslar amaliy laboratoriyalar bilan ta'minlangan
+              </p>
+            </div>
+            <div id="singleLessonBadge" style="display:none; background: rgba(254, 81, 150, 0.1); color: #fe5196; padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 700;">
+              Soatbay narx qo'llanadi
+            </div>
+          </div>
+
+          <div class="curriculum" id="curriculumContainer">
+            <!-- Darslar ro'yxati -->
+          </div>
+        </div>
+
+        <!-- O'QITUVCHI -->
+        <div class="card" style="padding: 28px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 16px;">Kurs O'qituvchisi</h2>
+          <div style="display: flex; gap: 20px; align-items: center;">
+            <img id="instructorAvatar" src="/images/default-avatar.svg" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;" onerror="this.src='/images/default-avatar.svg'">
+            <div>
+              <h3 id="instructorNameBottom" style="margin:0 0 6px 0; font-size:1.15rem;">Ustoz</h3>
+              <p id="instructorBio" style="margin:0; font-size:0.9rem; color:var(--gray);"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Preview Video Modal -->
+<div id="videoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; padding:20px;">
+  <div style="position:relative; width:100%; max-width:800px; background:#000; border-radius:12px; overflow:hidden;">
+    <button onclick="closeVideoModal()" style="position:absolute; top:10px; right:12px; color:white; background:rgba(0,0,0,0.5); border:none; width:36px; height:36px; border-radius:50%; font-size:1.1rem; cursor:pointer; z-index:10;">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div style="aspect-ratio:16/9; width:100%;">
+      <iframe id="previewVideoIframe" style="width:100%; height:100%; border:none;" src="" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script>
+let currentCourse = null;
+let userPurchasedLessonIds = [];
+let isFullEnrolled = false;
+
+async function loadCourseDetail() {
+  const slugOrId = window.location.pathname.split('/').pop();
+  try {
+    const res = await API.get(`/courses/${slugOrId}`);
+    currentCourse = res.data;
+    isFullEnrolled = res.isEnrolled || false;
+    userPurchasedLessonIds = res.purchasedLessonIds || [];
+    renderCourseDetail();
+  } catch (err) {
+    Toast.error('Kurs ma\'lumotlarini yuklashda xatolik yuz berdi');
+  }
+}
+
+function renderCourseDetail() {
+  if (!currentCourse) return;
+  const c = currentCourse;
+  const isCyber = c.category === 'cybersecurity';
+  const hourlyRate = isCyber ? 150000 : 70000;
+
+  document.title = `${c.title} | VELQI`;
+  document.getElementById('courseTitle').textContent = c.title;
+  const courseImage = document.getElementById('courseHeroImage');
+  courseImage.src = getCourseThumbnail(c);
+  courseImage.alt = `${c.title} kursi uchun rasm`;
+  document.getElementById('courseShortDesc').textContent = c.shortDescription || c.description;
+  document.getElementById('heroCategoryName').textContent = c.category.toUpperCase();
+  document.getElementById('instructorName').textContent = c.instructor?.name || 'VELQI Ustoz';
+  document.getElementById('instructorNameBottom').textContent = c.instructor?.name || 'VELQI Ustoz';
+  document.getElementById('instructorBio').textContent = c.instructor?.bio || 'Tajribali amaliyotchi o\'qituvchi.';
+  if (c.instructor?.avatar) {
+    document.getElementById('instructorAvatar').src = c.instructor.avatar;
+  }
+  document.getElementById('courseFullDesc').innerHTML = `<p>${c.description}</p>`;
+
+  if (isCyber || c.allowSingleLessonPurchase) {
+    document.getElementById('cyberSecSpecialBanner').style.display = 'block';
+    document.getElementById('perLessonPriceNotice').style.display = 'block';
+    document.getElementById('singleLessonBadge').style.display = 'inline-block';
+    document.getElementById('perLessonPriceNotice').textContent = `Dars narxi: ${formatPrice(hourlyRate)} / soat`;
+    document.getElementById('singleLessonBadge').textContent = `${formatPrice(hourlyRate)} / soat`;
+    document.querySelector('#cyberSecSpecialBanner span').textContent =
+      `Dars narxi ${formatPrice(hourlyRate)} / soat. To'lov davomiylikka qarab hisoblanadi.`;
+  }
+
+  // Narx ko'rsatish
+  const priceContainer = document.getElementById('courseMainPrice');
+  if (isFullEnrolled) {
+    priceContainer.innerHTML = '<span style="color:var(--success);">Siz bu kursga yozilgansiz ✅</span>';
+    document.getElementById('btnFullEnroll').textContent = "Darslarni Ko'rish";
+  } else if (c.isFree) {
+    priceContainer.innerHTML = '<span style="color:var(--success);">BEPUL</span>';
+    document.getElementById('btnFullEnroll').innerHTML = '<i class="fa-solid fa-play"></i> Bepul Boshlash';
+  } else {
+    priceContainer.innerHTML = `${formatPrice(hourlyRate)} / soat`;
+  }
+
+  // Nimalarni o'rganasiz
+  const learnContainer = document.getElementById('courseWhatYouLearn');
+  const whatList = c.whatYouLearn && c.whatYouLearn.length > 0 ? c.whatYouLearn : [
+    'Amaliy keyslar va laboratoriyalar',
+    'Zamonaviy vositalar va texnologiyalar',
+    'Real loyihalar ustida ishlash',
+    'Ishga joylashish uchun tayyorgarlik va sertifikat'
+  ];
+  learnContainer.innerHTML = whatList.map(item => `
+    <div style="display:flex; align-items:center; gap:8px; font-size:0.9rem;">
+      <i class="fa-solid fa-circle-check" style="color:var(--success);"></i>
+      <span>${item}</span>
+    </div>
+  `).join('');
+
+  // Curriculum rendering
+  renderCurriculum(c);
+}
+
+function renderCurriculum(c) {
+  const container = document.getElementById('curriculumContainer');
+  if (!c.sections || c.sections.length === 0) {
+    container.innerHTML = '<p style="color:var(--gray);">Darslar ro\'yxati tez orada to\'ldiriladi.</p>';
+    return;
+  }
+
+  const isCyber = c.category === 'cybersecurity';
+
+  container.innerHTML = c.sections.map((sec, secIdx) => `
+    <div class="curriculum-section open" style="margin-bottom: 14px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+      <div class="curriculum-header" data-section-toggle style="padding: 14px 18px; background: var(--bg); display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+        <strong style="font-size:0.95rem;">${sec.title}</strong>
+        <span style="font-size:0.8rem; color:var(--gray);">${sec.lessons ? sec.lessons.length : 0} ta dars <i class="fa-solid fa-chevron-down fa-xs" style="margin-left:6px;"></i></span>
+      </div>
+      <div class="curriculum-lessons" style="display:block;">
+        ${(sec.lessons || []).map((les, lesIdx) => {
+          const isPurchased = userPurchasedLessonIds.includes(les._id.toString());
+          const hasAccess = isFullEnrolled || les.isPreview || isPurchased;
+          const lessonPrice = Math.ceil(((Number(les.duration) || 60) * (isCyber ? 150000 : 70000)) / 60);
+
+          return `
+            <div style="display:flex; align-items:center; justify-content:space-between; padding: 12px 18px; border-top: 1px solid var(--border); font-size:0.88rem; flex-wrap:wrap; gap:10px; background:${hasAccess ? 'rgba(72,187,120,0.03)' : 'white'};">
+              <div style="display:flex; align-items:center; gap:12px; flex:1; min-width:240px;">
+                <div style="width:28px; height:28px; border-radius:50%; background:${hasAccess ? 'rgba(72,187,120,0.1)' : 'var(--bg)'}; color:${hasAccess ? 'var(--success)' : 'var(--gray)'}; display:flex; align-items:center; justify-content:center; font-size:0.75rem;">
+                  ${hasAccess ? '<i class="fa-solid fa-check"></i>' : (lesIdx + 1)}
+                </div>
+                <div>
+                  <strong style="color:var(--dark); display:block;">${les.title}</strong>
+                  <span style="font-size:0.78rem; color:var(--gray);"><i class="fa-regular fa-clock"></i> ${les.duration || 45} daqiqa</span>
+                </div>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:10px;">
+                ${les.isPreview ? `
+                  <a href="/learn/${c._id}?lessonId=${les._id}" class="status-badge status-active">
+                    <i class="fa-solid fa-terminal"></i> Bepul CLI Sinov
+                  </a>
+                ` : ''}
+                
+                ${hasAccess && !les.isPreview ? `
+                  <a href="/learn/${c._id}?lessonId=${les._id}" class="btn btn-sm btn-outline-primary" style="padding:4px 12px; font-size:0.8rem;">
+                    <i class="fa-solid fa-terminal"></i> Darsga Kirish
+                  </a>
+                ` : ''}
+
+                ${!hasAccess ? `
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-weight:700; color:#fe5196; font-size:0.88rem;">${lessonPrice.toLocaleString()} so'm</span>
+                    <button class="btn btn-sm btn-primary" data-buy-lesson="${les._id}" data-lesson-price="${lessonPrice}" style="background: linear-gradient(135deg, #f77062, #fe5196); padding:5px 12px; font-size:0.8rem;">
+                      <i class="fa-solid fa-unlock"></i> Sotib olish
+                    </button>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// Dars narxi davomiylik va soatbay tarif asosida hisoblanadi.
+async function buySingleLesson(courseId, lessonId, lessonTitle, price) {
+  if (!AuthState.isLoggedIn()) {
+    Toast.warning('Darsni xarid qilish uchun tizimga kiring!');
+    setTimeout(() => window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname)}`, 1000);
+    return;
+  }
+
+  const confirmBuy = confirm(`"${lessonTitle}" darsini ${price.toLocaleString()} so'mga sotib olmoqchimisiz?`);
+  if (!confirmBuy) return;
+
+  Loading.show();
+  try {
+    const res = await API.post('/payment/buy-lesson', {
+      courseId,
+      lessonId,
+      paymentMethod: 'click'
+    });
+    Loading.hide();
+    Toast.success(res.message || 'Dars muvaffaqiyatli sotib olindi!');
+    userPurchasedLessonIds.push(lessonId.toString());
+    renderCurriculum(currentCourse);
+  } catch (err) {
+    Loading.hide();
+    Toast.error(err.message || 'Xarid jarayonida xatolik yuz berdi');
+  }
+}
+
+async function handleFullEnroll() {
+  if (!currentCourse) return;
+  if (isFullEnrolled) {
+    window.location.href = `/learn/${currentCourse._id}`;
+    return;
+  }
+  addToCart(currentCourse._id);
+}
+
+function handleWishlistClick() {
+  if (!currentCourse) return;
+  toggleWishlist(currentCourse._id, document.getElementById('btnWishlist'));
+}
+
+document.addEventListener('click', (event) => {
+  const sectionHeader = event.target.closest('[data-section-toggle]');
+  if (sectionHeader) {
+    sectionHeader.parentElement.classList.toggle('open');
+    return;
+  }
+
+  const lessonButton = event.target.closest('[data-buy-lesson]');
+  if (lessonButton && currentCourse) {
+    const lessonId = lessonButton.dataset.buyLesson;
+    const lesson = currentCourse.sections
+      ?.flatMap(section => section.lessons || [])
+      .find(item => item._id.toString() === lessonId);
+    if (lesson) {
+      buySingleLesson(currentCourse._id, lessonId, lesson.title, Number(lessonButton.dataset.lessonPrice));
+    }
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btnFullEnroll').addEventListener('click', handleFullEnroll);
+  document.getElementById('btnWishlist').addEventListener('click', handleWishlistClick);
+  loadCourseDetail();
+});
+</script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

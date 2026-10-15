@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mening Kurslarim | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body style="background: var(--bg);">
+
+<%- include('../partials/navbar') %>
+
+<div class="container" style="padding-top: calc(var(--navbar-height) + 40px); padding-bottom: 80px;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px; flex-wrap:wrap; gap:12px;">
+    <div>
+      <h1 style="font-size: 2rem; margin:0;">Mening Kurslarim 📚</h1>
+      <p style="color:var(--gray); margin:4px 0 0 0;">Siz yozilgan va xarid qilgan barcha kurslar</p>
+    </div>
+    <a href="/courses" class="btn btn-outline-primary"><i class="fa-solid fa-compass"></i> Boshqa kurslar</a>
+  </div>
+
+  <div class="courses-grid" id="myCoursesGrid">
+    <!-- Kurslar -->
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script>
+async function loadMyCourses() {
+  if (!AuthState.isLoggedIn()) {
+    window.location.href = '/login?redirect=/my-courses';
+    return;
+  }
+
+  const container = document.getElementById('myCoursesGrid');
+  try {
+    const res = await API.get('/users/dashboard');
+    const user = res.data.user;
+
+    if (!user.enrolledCourses || user.enrolledCourses.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state" style="grid-column: 1/-1;">
+          <div class="empty-state-icon">📖</div>
+          <h3>Siz hali hech qaysi kursga yozilmagansiz</h3>
+          <p>Kiberxavfsizlik, AI, Frontend yoki Dizayn kurslaridan birini tanlang</p>
+          <a href="/courses" class="btn btn-primary">Kurslarni Tanlash</a>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = user.enrolledCourses.map(e => {
+      const c = e.course;
+      if (!c) return '';
+      return `
+        <div class="course-card">
+          <div class="course-thumbnail">
+            <img src="${getCourseThumbnail(c)}" alt="${c.title}" onerror="this.src='/images/courses/general.svg'">
+          </div>
+          <div class="course-body">
+            <h3 class="course-title"><a href="/learn/${c._id}">${c.title}</a></h3>
+            <div style="margin-top:12px;">
+              <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:4px; color:var(--gray);">
+                <span>Jarayon</span><span>${e.progress || 0}%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width:${e.progress || 0}%;"></div>
+              </div>
+            </div>
+            <div style="margin-top:16px;">
+              <a href="/learn/${c._id}" class="btn btn-primary btn-sm" style="width:100%;">
+                <i class="fa-solid fa-play"></i> Darslarga o'tish
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    Toast.error('Kurslarni yuklashda xatolik');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadMyCourses);
+</script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

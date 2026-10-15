@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin panelga kirish | VELQI</title>
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body class="admin-login-page">
+  <main class="admin-login-card">
+    <a href="/" class="admin-login-brand"><img src="/images/velqi-logo-crown.png" alt=""> VELQI</a>
+    <h1>Admin panelga kirish</h1>
+    <p>Admin paneli uchun login va parolingizni kiriting.</p>
+    <form id="adminLoginForm">
+      <label for="adminEmail">Login</label>
+      <input id="adminEmail" name="email" type="text" autocomplete="username" placeholder="admin" required>
+      <label for="adminPassword">Parol</label>
+      <input id="adminPassword" name="password" type="password" autocomplete="current-password" required>
+      <p id="adminLoginMessage" class="admin-message" role="alert"></p>
+      <button class="btn btn-primary" type="submit">Kirish</button>
+    </form>
+    <a class="admin-login-back" href="/">Asosiy sahifaga qaytish</a>
+  </main>
+  <script>
+    const loginForm = document.getElementById('adminLoginForm');
+    const loginMessage = document.getElementById('adminLoginMessage');
+    const queryError = new URLSearchParams(window.location.search).get('error');
+    if (queryError) loginMessage.textContent = queryError;
+
+    loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      loginMessage.textContent = '';
+      const button = loginForm.querySelector('button');
+      button.disabled = true;
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('adminEmail').value.trim().toLowerCase() === 'admin'
+              ? 'admin@eduplatform.uz'
+              : document.getElementById('adminEmail').value.trim().toLowerCase(),
+            password: document.getElementById('adminPassword').value
+          })
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || 'Kirish amalga oshmadi.');
+        if (result.user.role !== 'admin') {
+          await fetch('/api/auth/logout', { credentials: 'include' });
+          throw new Error('Bu sahifaga faqat administrator kira oladi.');
+        }
+        window.location.href = '/admin';
+      } catch (error) {
+        loginMessage.textContent = error.message;
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

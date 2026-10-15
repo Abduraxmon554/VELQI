@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ro'yxatdan O'tish | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+
+<%- include('../partials/navbar') %>
+
+<div class="auth-page">
+  <div class="auth-left">
+    <div style="max-width: 440px; color: white;">
+      <div style="font-size: 3rem; margin-bottom: 20px;">🎓</div>
+      <h1 style="color: white; font-size: 2.4rem; margin-bottom: 16px;">Yangi marralarni zabt eting</h1>
+      <p style="font-size: 1.05rem; opacity: 0.9; line-height: 1.7;">
+        VELQI-da hisob oching va kiberxavfsizlik (150 000 so'm/soat), AI, Node.js, Frontend va Dizayn kurslarini qulay o'rganing.
+      </p>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <h2 class="auth-title">Ro'yxatdan O'tish 📝</h2>
+      <p class="auth-subtitle">Bir necha soniyada yangi hisob oching</p>
+
+      <form id="registerForm">
+        <div class="form-group">
+          <label class="form-label">To'liq Ismingiz</label>
+          <div class="input-group">
+            <i class="fa-solid fa-user input-icon"></i>
+            <input type="text" id="name" class="form-control" placeholder="Ali Valiyev" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Manzili</label>
+          <div class="input-group">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" id="email" class="form-control" placeholder="nomingiz@misol.uz" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Telefon Raqami</label>
+          <div class="input-group">
+            <i class="fa-solid fa-phone input-icon"></i>
+            <input type="tel" id="phone" class="form-control" placeholder="+998 90 123 45 67">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Parol (kamida 6 ta belgi)</label>
+          <div class="input-group">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+            <button type="button" class="input-toggle"><i class="fa-solid fa-eye"></i></button>
+          </div>
+          <div style="background:var(--border); height:4px; border-radius:2px; margin-top:6px; overflow:hidden;">
+            <div id="strengthBar" style="height:100%; width:0%; transition:all 0.3s;"></div>
+          </div>
+          <span id="strengthText" style="font-size:0.75rem; color:var(--gray);"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Parolni Tasdiqlang</label>
+          <div class="input-group">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="confirmPassword" class="form-control" placeholder="••••••••" required>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; cursor:pointer;">
+            <input type="checkbox" id="agreeTerms" checked required>
+            <span>Men <a href="/terms" style="color:var(--primary);">foydalanish shartlari</a>ga roziman</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 13px; font-size: 1rem;">
+          <i class="fa-solid fa-user-plus"></i> Ro'yxatdan O'tish
+        </button>
+      </form>
+
+      <p style="text-align: center; font-size: 0.9rem; color: var(--gray); margin-top: 24px;">
+        Allaqachon hisobingiz bormi? <a href="/login" style="color: var(--primary); font-weight: 600;">Kirish</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

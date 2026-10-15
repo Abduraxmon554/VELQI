@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rasmiy Sertifikat | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body style="background: var(--bg);">
+
+<%- include('../partials/navbar') %>
+
+<div class="certificate-wrapper">
+  <div class="certificate">
+    <div class="cert-logo">🎓</div>
+    <div class="cert-brand">VELQI Uzbekistan</div>
+    <div class="cert-title">Muvaffaqiyat Sertifikati</div>
+
+    <div class="cert-completed">Ushbu sertifikat tasdiqlaydiki:</div>
+    <div class="cert-name" id="certStudentName">Talaba Ismi</div>
+    <div class="cert-completed">quyidagi professional kursni muvaffaqiyatli tamomladi:</div>
+    <div class="cert-course" id="certCourseTitle">Kiberxavfsizlik va Ethical Hacking</div>
+    <div class="cert-divider"></div>
+
+    <div class="cert-footer">
+      <div class="cert-signature">
+        <div class="cert-signature-name">Amir Nazarov</div>
+        <div class="cert-signature-line"></div>
+        <div class="cert-signature-title">Bosh Instruktor</div>
+      </div>
+
+      <div style="text-align:center;">
+        <i class="fa-solid fa-stamp" style="font-size:3rem; color:var(--primary); opacity:0.8;"></i>
+        <div style="font-size:0.75rem; color:var(--gray); margin-top:4px;">VERIFIED ID</div>
+      </div>
+
+      <div class="cert-signature">
+        <div class="cert-signature-name">VELQI Kengashi</div>
+        <div class="cert-signature-line"></div>
+        <div class="cert-signature-title">Bosh Direktor</div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px; font-size:0.75rem; color:var(--gray-light);" id="certIdNumber">
+      Sertifikat ID: CERT-UZB-2024-998
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center; padding-bottom: 60px;">
+  <button class="btn btn-primary" onclick="window.print()"><i class="fa-solid fa-print"></i> Sertifikatni Chop Etish / PDF Saqlash</button>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (AuthState.user) {
+    document.getElementById('certStudentName').textContent = AuthState.user.name || 'Talaba';
+  }
+});
+</script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

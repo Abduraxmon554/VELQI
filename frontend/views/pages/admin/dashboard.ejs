@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+
+<div class="admin-layout" data-admin-page="dashboard">
+  <%- include('../../partials/admin-nav') %>
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-page-title">Admin Boshqaruv Paneli</div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span class="status-badge status-active">Admin</span>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div class="stats-cards">
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background:rgba(102,126,234,0.1); color:var(--primary);"><i class="fa-solid fa-users"></i></div>
+          <div class="stat-card-info">
+            <strong id="admTotalUsers">—</strong>
+            <span>Foydalanuvchilar</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background:rgba(254,81,150,0.1); color:#fe5196;"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="stat-card-info">
+            <strong style="font-size:1.05rem;">70 ming / 150 ming</strong>
+            <span>Oddiy / kiberxavfsizlik · so‘m/soat</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background:rgba(72,187,120,0.1); color:var(--success);"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div class="stat-card-info">
+            <strong id="admCourses">—</strong>
+            <span>Faol / jami kurslar</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background:rgba(246,173,85,0.1); color:var(--warning);"><i class="fa-solid fa-money-bill-wave"></i></div>
+          <div class="stat-card-info">
+            <strong id="admRevenue">—</strong>
+            <span>Jami tushum</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background:rgba(246,173,85,0.12); color:var(--warning);"><i class="fa-solid fa-receipt"></i></div>
+          <div class="stat-card-info">
+            <strong id="admOrders">—</strong>
+            <span>Muvaffaqiyatli buyurtmalar</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card admin-info-card">
+        <h3>Tezkor boshqaruv</h3>
+        <p>Kurs narxlarini yangilang, foydalanuvchilar holatini boshqaring va buyurtmalarni ko‘ring.</p>
+        <div class="admin-quick-links">
+          <a href="/admin/courses" class="btn btn-primary">Kurslarni boshqarish</a>
+          <a href="/admin/users" class="btn btn-outline-primary">Foydalanuvchilar</a>
+          <a href="/admin/orders" class="btn btn-outline-primary">Buyurtmalar</a>
+        </div>
+      </div>
+      <p id="adminMessage" class="admin-message" role="status"></p>
+    </div>
+  </main>
+</div>
+
+<script src="/js/main.js"></script>
+<script src="/js/admin.js"></script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

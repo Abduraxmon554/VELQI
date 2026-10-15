@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bog'lanish | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body style="background: var(--bg);">
+
+<%- include('../partials/navbar') %>
+
+<div class="container" style="padding-top: calc(var(--navbar-height) + 40px); padding-bottom: 80px;">
+  <h1 style="font-size: 2.2rem; margin-bottom: 28px;">Biz Bilan Bog'laning 💬</h1>
+
+  <div class="contact-layout">
+    <div>
+      <div class="contact-info-item">
+        <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div>
+          <h4>Manzil</h4>
+          <p>Toshkent shahri, IT Park, O'zbekiston</p>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+        <div>
+          <h4>Telefon / Call-markaz</h4>
+          <p>+998 (71) 200-00-00</p>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+        <div>
+          <h4>Elektron Pochta</h4>
+          <p>info@eduplatform.uz</p>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-icon" style="background:#25D366;"><i class="fa-brands fa-telegram"></i></div>
+        <div>
+          <h4>Telegram</h4>
+          <p>@eduplatform_support</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 28px;">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px;">Xabar qoldiring</h3>
+      <form onsubmit="event.preventDefault(); Toast.success('Xabaringiz yuborildi! Tez orada javob beramiz.'); this.reset();">
+        <div class="form-group">
+          <label class="form-label">Ismingiz</label>
+          <input type="text" class="form-control" required placeholder="Ismingiz">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" required placeholder="Email manzilingiz">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mavzu</label>
+          <input type="text" class="form-control" placeholder="Kurslar, to'lov yoki hamkorlik">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Xabaringiz</label>
+          <textarea class="form-control" rows="4" required placeholder="Savolingizni yozing..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Xabarni Yuborish</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

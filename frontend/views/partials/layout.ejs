@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VELQI - Uzbekiston's best online learning platform">
+  <meta name="theme-color" content="#667eea">
+  <title><%= title %> | VELQI</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Inline Theme Init (Anti-flicker) -->
+  <script>
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+</head>
+<body>
+
+<%- include('../partials/navbar') %>
+
+<main>
+  <%- body %>
+</main>
+
+<%- include('../partials/footer') %>
+
+<!-- Scripts -->
+<script src="/js/main.js"></script>
+<script src="/js/auth.js"></script>
+
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

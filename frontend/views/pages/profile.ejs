@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Sozlamalari | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body style="background: var(--bg);">
+
+<%- include('../partials/navbar') %>
+
+<div class="container" style="padding-top: calc(var(--navbar-height) + 40px); padding-bottom: 80px; max-width: 800px;">
+  <h1 style="font-size: 2rem; margin-bottom: 24px;">Profil Sozlamalari ⚙️</h1>
+
+  <div class="card" style="padding: 28px; margin-bottom: 24px;">
+    <h2 style="font-size: 1.25rem; margin-bottom: 20px;">Shaxsiy Ma'lumotlar</h2>
+    <form id="profileForm">
+      <div class="form-group">
+        <label class="form-label">To'liq Ism</label>
+        <input type="text" id="profName" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email (o'zgartirib bo'lmaydi)</label>
+        <input type="email" id="profEmail" class="form-control" readonly disabled>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Telefon Raqami</label>
+        <input type="tel" id="profPhone" class="form-control" placeholder="+998 90 123 45 67">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Bio (O'zingiz haqingizda)</label>
+        <textarea id="profBio" class="form-control" rows="3" placeholder="Qisqacha o'zingiz haqingizda..."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Saqlash</button>
+    </form>
+  </div>
+
+  <div class="card" style="padding: 28px;">
+    <h2 style="font-size: 1.25rem; margin-bottom: 20px;">Parolni Yangilash</h2>
+    <form id="passwordForm">
+      <div class="form-group">
+        <label class="form-label">Joriy Parol</label>
+        <input type="password" id="currentPass" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Yangi Parol</label>
+        <input type="password" id="newPass" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Parolni O'zgartirish</button>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script>
+async function initProfile() {
+  if (!AuthState.isLoggedIn()) {
+    window.location.href = '/login?redirect=/profile';
+    return;
+  }
+  const u = AuthState.user;
+  document.getElementById('profName').value = u.name || '';
+  document.getElementById('profEmail').value = u.email || '';
+  document.getElementById('profPhone').value = u.phone || '';
+  document.getElementById('profBio').value = u.bio || '';
+}
+
+document.getElementById('profileForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    const name = document.getElementById('profName').value.trim();
+    const phone = document.getElementById('profPhone').value.trim();
+    const bio = document.getElementById('profBio').value.trim();
+
+    const res = await API.put('/users/profile', { name, phone, bio });
+    AuthState.setUser(res.data, localStorage.getItem('token'));
+    Toast.success('Profil muvaffaqiyatli saqlandi!');
+  } catch (err) {
+    Toast.error(err.message || 'Xatolik');
+  }
+});
+
+document.getElementById('passwordForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    const currentPassword = document.getElementById('currentPass').value;
+    const newPassword = document.getElementById('newPass').value;
+
+    await API.put('/auth/update-password', { currentPassword, newPassword });
+    Toast.success('Parol muvaffaqiyatli yangilandi!');
+    document.getElementById('passwordForm').reset();
+  } catch (err) {
+    Toast.error(err.message || 'Xatolik');
+  }
+});
+
+document.addEventListener('DOMContentLoaded', initProfile);
+</script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

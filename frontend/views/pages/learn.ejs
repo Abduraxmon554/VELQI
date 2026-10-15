@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interfaol Terminal & Buyruqlar Darsi | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+  <style>
+    .cli-workspace {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      min-height: calc(100vh - var(--navbar-height));
+      background: var(--bg);
+    }
+    .cli-main {
+      padding: 24px;
+      overflow-y: auto;
+      max-height: calc(100vh - var(--navbar-height));
+    }
+    .cli-terminal-window {
+      background: #0d1117;
+      border: 1.5px solid #30363d;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      margin-bottom: 24px;
+    }
+    .cli-terminal-header {
+      background: #161b22;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #30363d;
+    }
+    .cli-terminal-content {
+      padding: 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
+      min-height: 280px;
+      max-height: 380px;
+      overflow-y: auto;
+      color: #58a6ff;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+    .cli-input-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #161b22;
+      border-top: 1px solid #30363d;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .cli-prompt {
+      color: #2ea043;
+      font-weight: bold;
+      user-select: none;
+    }
+    .cli-input-field {
+      flex: 1;
+      background: transparent !important;
+      border: none !important;
+      outline: none !important;
+      color: #ffffff !important;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+    }
+    .cmd-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+      transition: var(--transition);
+    }
+    .cmd-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .cmd-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: #0d1117;
+      color: #79c0ff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 900px) {
+      .cli-workspace {
+        grid-template-columns: 1fr;
+      }
+      .learn-sidebar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<%- include('../partials/navbar') %>
+
+<div class="cli-workspace" style="padding-top: var(--navbar-height);">
+  <!-- Chap: Interfaol CLI Terminal va Dars Buyruqlari -->
+  <main class="cli-main">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+      <div>
+        <span class="status-badge status-active" id="lessonCategoryBadge">CLI BUYRUQLAR DARSI</span>
+        <h1 style="font-size: 1.6rem; margin: 6px 0 0 0;" id="activeLessonTitle">Dars yuklanmoqda...</h1>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-sm btn-outline-primary" onclick="prevLesson()"><i class="fa-solid fa-chevron-left"></i> Oldingi</button>
+        <button class="btn btn-sm btn-success" onclick="completeCurrentLesson()"><i class="fa-solid fa-check"></i> O'zlashtirdim</button>
+        <button class="btn btn-sm btn-primary" onclick="nextLesson()">Keyingi <i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+    <section class="lesson-video-card" aria-label="Dars videosi">
+      <div class="lesson-video-heading">
+        <div>
+          <h2><i class="fa-solid fa-circle-play"></i> Video dars</h2>
+          <p id="lessonVideoTitle">Darsga mos video material</p>
+        </div>
+        <label class="sr-only" for="lessonVideoSelect">Videoni tanlang</label>
+        <select id="lessonVideoSelect" aria-label="Videoni tanlang" onchange="selectLessonVideo(this.value)"></select>
+      </div>
+      <div class="lesson-video-frame" id="lessonVideoFrame"></div>
+    </section>
+
+    <!-- Amaliy mashqlar uchun interfaol terminal -->
+    <div class="cli-terminal-window">
+      <div class="cli-terminal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="width:12px; height:12px; border-radius:50%; background:#ff5f56; display:inline-block;"></span>
+          <span style="width:12px; height:12px; border-radius:50%; background:#ffbd2e; display:inline-block;"></span>
+          <span style="width:12px; height:12px; border-radius:50%; background:#27c93f; display:inline-block;"></span>
+          <span style="color:#8b949e; font-size:0.8rem; margin-left:8px; font-family:'JetBrains Mono',monospace;">
+            <i class="fa-solid fa-terminal"></i> root@kali-lab:~# (Interfaol CLI)
+          </span>
+        </div>
+        <div>
+          <button onclick="clearCliTerminal()" style="background:none; border:none; color:#8b949e; font-size:0.75rem; cursor:pointer;">
+            <i class="fa-solid fa-trash-can"></i> Tozalash
+          </button>
+        </div>
+      </div>
+
+      <!-- Terminal matni -->
+      <div class="cli-terminal-content" id="cliOutput">
+[VELQI Interactive CLI v3.2]
+Kali Linux 2024 & Development Terminal muhiti yuklandi.
+Ushbu dars amaliy buyruqlar orqali o'rgatiladi.
+Quyidagi buyruqlarni ko'rib chiqing va "Terminalda Bajarish" tugmasini bosing yoki o'zingiz yozing...
+      </div>
+
+      <!-- Terminal kiritish chizig'i -->
+      <div class="cli-input-line">
+        <span class="cli-prompt" id="cliPromptText">kali@lab:~$</span>
+        <input type="text" id="cliInputField" class="cli-input-field" placeholder="Buyruqni yozing (masalan: help yoki dars buyrug'i)..." autocomplete="off" onkeydown="handleCliKeyDown(event)">
+        <button onclick="executeEnteredCommand()" class="btn btn-sm btn-primary" style="padding:4px 10px; font-size:0.75rem;">Enter</button>
+      </div>
+    </div>
+
+    <!-- DARS BUYRUQLARI VA TUSHUNTIRISHLAR -->
+    <div class="card" style="padding: 24px; margin-bottom: 24px;">
+      <h2 style="font-size: 1.25rem; margin-bottom: 12px; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-terminal" style="color:var(--primary);"></i>
+        Darsning Asosiy Buyruqlari va Ko'rsatmalari
+      </h2>
+      <div id="lessonCommandsList">
+        <!-- Buyruqlar JS bilan yuklanadi -->
+      </div>
+    </div>
+
+    <!-- Nazariy qism va tushuntirish -->
+    <div class="card" style="padding: 24px;">
+      <h3 style="font-size: 1.15rem; margin-bottom: 12px;">Dars Mazmuni va Tushuntirish</h3>
+      <div id="lessonTheoryContent" style="line-height:1.8; color:var(--dark-3); font-size:0.95rem;">
+        <!-- Nazariya -->
+      </div>
+    </div>
+  </main>
+
+  <!-- O'ng: Darslar Mundarijasi -->
+  <aside class="learn-sidebar" style="border-left:1px solid var(--border); background:var(--white);">
+    <div class="learn-sidebar-header" style="color:var(--dark); border-bottom:1px solid var(--border);">
+      <i class="fa-solid fa-list-check" style="color:var(--primary);"></i> Kurs Rejasi
+    </div>
+    <div class="learn-progress-bar" style="border-bottom:1px solid var(--border);">
+      <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:6px; color:var(--gray);">
+        <span>O'zlashtirish</span>
+        <span id="learnProgressPercent">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="learnProgressBarFill" style="width:0%;"></div>
+      </div>
+    </div>
+
+    <div id="learnLessonsList">
+      <!-- Darslar ro'yxati -->
+    </div>
+  </aside>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script>
+let course = null;
+let flatLessons = [];
+let currentIndex = 0;
+let userPurchasedIds = [];
+let isFullEnrolled = false;
+let activeLessonVideos = [];
+
+const courseVideoResources = {
+  frontend: [
+    { title: 'JavaScript — boshlang‘ichlar uchun to‘liq kurs', id: 'PkZNo7MFNFg' },
+    { title: 'CSS — boshlang‘ichlar uchun to‘liq kurs', id: 'OXGznpKZ_sA' },
+    { title: 'React — boshlang‘ichlar uchun kurs', id: 'bMknfKXIFA8' }
+  ],
+  nodejs: [
+    { title: 'Node.js va Express.js — to‘liq kurs', id: 'Oe421EPjeBE' }
+  ],
+  backend: [
+    { title: 'Node.js va Express.js — to‘liq kurs', id: 'Oe421EPjeBE' }
+  ],
+  'ai-ml': [
+    { title: 'Machine Learning — boshlang‘ich kirish', id: 'Gv9_4yMHFhI' },
+    { title: 'Python — boshlang‘ichlar uchun to‘liq kurs', id: 'rfscVS0vtbw' }
+  ],
+  design: [
+    { title: 'Figma UI Design — boshlang‘ich qo‘llanma', id: 'FTFaQWZBqQ8' }
+  ],
+  cybersecurity: [
+    { title: 'Ethical Hacking — tarmoq penetration testing asoslari', id: '3Kq1MIfTWCE' }
+  ]
+};
+
+function normalizeVideoUrl(rawUrl) {
+  try {
+    const url = new URL(rawUrl);
+    const host = url.hostname.replace(/^www\./, '');
+    if (host === 'youtu.be') {
+      const id = url.pathname.slice(1);
+      return id ? { type: 'youtube', src: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}` } : null;
+    }
+    if (host === 'youtube.com' || host === 'm.youtube.com' || host === 'youtube-nocookie.com') {
+      const id = url.pathname.startsWith('/embed/')
+        ? url.pathname.split('/')[2]
+        : url.searchParams.get('v');
+      return id ? { type: 'youtube', src: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}` } : null;
+    }
+    if (host === 'vimeo.com' || host === 'player.vimeo.com') {
+      const id = url.pathname.split('/').filter(Boolean).pop();
+      return id && /^\d+$/.test(id) ? { type: 'vimeo', src: `https://player.vimeo.com/video/${id}` } : null;
+    }
+    if (/\.(mp4|webm|ogg)$/i.test(url.pathname)) {
+      return { type: 'file', src: url.href };
+    }
+  } catch (err) {
+    return null;
+  }
+  return null;
+}
+
+function renderLessonVideo(lesson) {
+  const frame = document.getElementById('lessonVideoFrame');
+  const title = document.getElementById('lessonVideoTitle');
+  const select = document.getElementById('lessonVideoSelect');
+  const ownVideo = lesson.videoUrl ? normalizeVideoUrl(lesson.videoUrl) : null;
+  activeLessonVideos = ownVideo
+    ? [{ title: lesson.title, ...ownVideo }]
+    : (courseVideoResources[course.category] || []).map(video => ({
+      title: video.title,
+      type: 'youtube',
+      src: `https://www.youtube-nocookie.com/embed/${video.id}`
+    }));
+
+  select.replaceChildren(...activeLessonVideos.map((video, index) => {
+    const option = document.createElement('option');
+    option.value = String(index);
+    option.textContent = video.title;
+    return option;
+  }));
+  select.hidden = activeLessonVideos.length < 2;
+
+  if (activeLessonVideos.length) {
+    selectLessonVideo(0);
+    return;
+  }
+
+  title.textContent = 'Bu dars uchun video havolasi qo‘shilmagan';
+  frame.innerHTML = '<div class="lesson-video-empty"><i class="fa-solid fa-video-slash"></i><span>Video materialni admin kurs darsiga YouTube, Vimeo yoki MP4 havolasi sifatida qo‘shishi mumkin.</span></div>';
+}
+
+function selectLessonVideo(index) {
+  const video = activeLessonVideos[Number(index)];
+  if (!video) return;
+  document.getElementById('lessonVideoTitle').textContent = video.title;
+  const frame = document.getElementById('lessonVideoFrame');
+  if (video.type === 'file') {
+    frame.innerHTML = '';
+    const player = document.createElement('video');
+    player.src = video.src;
+    player.controls = true;
+    player.playsInline = true;
+    frame.appendChild(player);
+    return;
+  }
+  frame.innerHTML = '';
+  const player = document.createElement('iframe');
+  player.src = video.src;
+  player.title = video.title;
+  player.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  player.referrerPolicy = 'strict-origin-when-cross-origin';
+  player.allowFullscreen = true;
+  frame.appendChild(player);
+}
+
+// Har bir dars uchun haqiqiy buyruqlar bazasi
+const lessonCommandsData = {
+  1: [
+    {
+      cmd: "whoami && uname -a",
+      desc: "Tizim ma'lumotlari va joriy foydalanuvchi huquqlarini tekshirish",
+      flags: "whoami: Joriy foydalanuvchi nomi, uname -a: Linux yadrosi va arxitekturasi",
+      output: "kali\nLinux kali-lab 6.6.9-amd64 #1 SMP PREEMPT_DYNAMIC Kali 6.6.9-1kali1 x86_64 GNU/Linux"
+    },
+    {
+      cmd: "ip addr show eth0",
+      desc: "Tarmoq interfeysi IP manzili va MAC manzilini aniqlash",
+      flags: "ip addr: IP konfiguratsiyasi, eth0: Asosiy tarmoq kartasi",
+      output: "2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP\n    inet 192.168.1.105/24 brd 192.168.1.255 scope global eth0"
+    }
+  ],
+  2: [
+    {
+      cmd: "sudo apt update && sudo apt install -y kali-tools-top10",
+      desc: "Kali Linux eng sara 10 ta xavfsizlik asboblarini yangilash",
+      flags: "-y: Tasdiqlashni avtomatik qabul qilish",
+      output: "Hit:1 http://http.kali.org/kali kali-rolling InRelease\nReading package lists... Done\nSetting up nmap, wireshark, burpsuite... Done!"
+    },
+    {
+      cmd: "cat /etc/os-release",
+      desc: "Operatsion tizim versiyasini ko'rish",
+      flags: "os-release: Tizim versiyasi haqida rasmiy fayl",
+      output: "PRETTY_NAME=\"Kali GNU/Linux Rolling\"\nNAME=\"Kali GNU/Linux\"\nID=kali"
+    }
+  ],
+  3: [
+    {
+      cmd: "nmap -sV -sC -T4 192.168.1.1",
+      desc: "Ochiq portlar va xizmat versiyalarini skanerlash",
+      flags: "-sV: Xizmat versiyasini aniqlash, -sC: Standart skriptlarni ishga tushirish, -T4: Tezkor rejim",
+      output: "PORT     STATE SERVICE VERSION\n22/tcp   open  ssh     OpenSSH 8.9p1 Ubuntu\n80/tcp   open  http    Apache httpd 2.4.52\n443/tcp  open  ssl/ssl OpenSSL 3.0.2\nNmap done: 1 IP address (1 host up) scanned in 4.32 seconds"
+    },
+    {
+      cmd: "nmap -p- --min-rate 1000 192.168.1.1",
+      desc: "Barcha 65,535 ta portni to'liq skanerlash",
+      flags: "-p-: Barcha portlar (1-65535), --min-rate 1000: Sekundiga 1000 ta paket yuborish",
+      output: "Discovered open port 8080/tcp on 192.168.1.1 (Node.js API)\nDiscovered open port 3306/tcp on 192.168.1.1 (MySQL Database)"
+    }
+  ],
+  4: [
+    {
+      cmd: "tshark -i eth0 -c 5 -Y 'http'",
+      desc: "Tarmoq paketlarini terminal orqali ushlash (Wireshark CLI)",
+      flags: "-i: Interfeys, -c 5: 5 ta paket, -Y: Wireshark filtri",
+      output: "1 0.000000 192.168.1.105 -> 192.168.1.1 HTTP GET /api/v1/courses HTTP/1.1\n2 0.015234 192.168.1.1 -> 192.168.1.105 HTTP HTTP/1.1 200 OK (application/json)"
+    }
+  ],
+  5: [
+    {
+      cmd: "sqlmap -u 'http://victim.lab/product?id=1' --dbs",
+      desc: "Veb saytdagi SQL Injection zaifligini avtomatlashgan tekshirish",
+      flags: "-u: Nishon URL manzili, --dbs: Ma'lumotlar bazalarini aniqlash",
+      output: "[*] testing connection to the target URL\n[+] Parameter 'id' is vulnerable to boolean-based blind, error-based, AND UNION query SQLi!\navailable databases [3]:\n[*] information_schema\n[*] eduplatform_db\n[*] users_auth"
+    }
+  ],
+  6: [
+    {
+      cmd: "curl -i -X POST http://localhost:5000/api/auth/login -d '{\"email\":\"test@test.uz\"}'",
+      desc: "API xavfsizlik sarlavhalarini tekshirish (XSS, CSRF, Helmet)",
+      flags: "-i: HTTP response headerlarini ko'rish, -X: So'rov turi",
+      output: "HTTP/1.1 400 Bad Request\nX-Frame-Options: DENY\nX-Content-Type-Options: nosniff\nX-XSS-Protection: 1; mode=block\nContent-Security-Policy: default-src 'self'"
+    }
+  ],
+  default: [
+    {
+      cmd: "git status && npm run test",
+      desc: "Loyihaning o'zgarishlari va testlarini tekshirish",
+      flags: "Dasturlash va avtomatlashtirish buyrug'i",
+      output: "On branch main\nYour branch is up to date.\nPASS test/api.test.js\nAll tests passed successfully!"
+    }
+  ]
+};
+
+async function initLearnPage() {
+  const courseId = window.location.pathname.split('/').pop();
+  const urlParams = new URLSearchParams(window.location.search);
+  const targetLessonId = urlParams.get('lessonId');
+
+  try {
+    const res = await API.get(`/courses/${courseId}`);
+    course = res.data;
+    isFullEnrolled = res.isEnrolled;
+    userPurchasedIds = res.purchasedLessonIds || [];
+
+    document.getElementById('lessonCategoryBadge').textContent = (course.category || 'CLI').toUpperCase();
+
+    // Flatten lessons
+    flatLessons = [];
+    if (course.sections) {
+      course.sections.forEach(sec => {
+        if (sec.lessons) {
+          sec.lessons.forEach(l => flatLessons.push(l));
+        }
+      });
+    }
+
+    renderLessonsList();
+
+    if (targetLessonId) {
+      const idx = flatLessons.findIndex(l => l._id.toString() === targetLessonId);
+      if (idx !== -1) {
+        selectLesson(idx);
+        return;
+      }
+    }
+
+    selectLesson(0);
+  } catch (err) {
+    Toast.error('Kursni yuklashda xatolik yuz berdi');
+  }
+}
+
+function renderLessonsList() {
+  const container = document.getElementById('learnLessonsList');
+  const hourlyRate = course.category === 'cybersecurity' ? 150000 : 70000;
+  container.innerHTML = flatLessons.map((l, idx) => {
+    const isPurchased = userPurchasedIds.includes(l._id.toString());
+    const hasAccess = isFullEnrolled || l.isPreview || isPurchased;
+
+    return `
+      <div class="learn-lesson-item ${idx === currentIndex ? 'active' : ''}" onclick="selectLesson(${idx})" style="opacity: ${hasAccess ? '1' : '0.6'};">
+        <div class="lesson-check">
+          <i class="fa-solid fa-terminal"></i>
+        </div>
+        <div class="learn-lesson-title">
+          ${l.title}
+          ${!hasAccess ? `<span style="display:block; color:#fe5196; font-size:0.72rem;">(${Math.ceil(((Number(l.duration) || 60) * hourlyRate) / 60).toLocaleString()} so'm)</span>` : ''}
+        </div>
+        <div class="learn-lesson-duration">
+          ${l.duration || 45}m
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function selectLesson(idx) {
+  if (idx < 0 || idx >= flatLessons.length) return;
+  currentIndex = idx;
+  const lesson = flatLessons[idx];
+  const isPurchased = userPurchasedIds.includes(lesson._id.toString());
+  const hasAccess = isFullEnrolled || lesson.isPreview || isPurchased;
+
+  if (!hasAccess) {
+    const hourlyRate = course.category === 'cybersecurity' ? 150000 : 70000;
+    const lessonPrice = Math.ceil(((Number(lesson.duration) || 60) * hourlyRate) / 60);
+    const buy = confirm(`"${lesson.title}" darsini ${lessonPrice.toLocaleString()} so'mga sotib olmoqchimisiz?`);
+    if (buy) {
+      buySingleLesson(course._id, lesson._id, lesson.title, lessonPrice);
+    }
+    return;
+  }
+
+  document.getElementById('activeLessonTitle').textContent = lesson.title;
+  renderLessonVideo(lesson);
+  document.getElementById('lessonTheoryContent').innerHTML = lesson.content || '<p>Ushbu darsning barcha buyruqlarini terminalda bajarib, natijalarni o\'rganing.</p>';
+
+  // Dars buyruqlarini yuklash
+  const lessonNumber = idx + 1;
+  const cmds = lessonCommandsData[lessonNumber] || lessonCommandsData.default;
+
+  const cmdsContainer = document.getElementById('lessonCommandsList');
+  cmdsContainer.innerHTML = cmds.map((c, cIdx) => `
+    <div class="cmd-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+        <span class="cmd-badge">$ ${c.cmd}</span>
+        <div style="display:flex; gap:6px;">
+          <button class="btn btn-sm btn-outline-primary" style="padding:3px 10px; font-size:0.75rem;" onclick="copyCmd('${c.cmd.replace(/'/g, "\\'")}')">
+            <i class="fa-regular fa-copy"></i> Nusxa
+          </button>
+          <button class="btn btn-sm btn-primary" style="padding:3px 10px; font-size:0.75rem;" onclick="executePresetCmd('${c.cmd.replace(/'/g, "\\'")}', '${c.output.replace(/\n/g, '\\n').replace(/'/g, "\\'")}')">
+            <i class="fa-solid fa-play"></i> Terminalda Bajarish
+          </button>
+        </div>
+      </div>
+      <p style="margin:0 0 4px 0; font-size:0.88rem; color:var(--dark);"><strong>Vazifasi:</strong> ${c.desc}</p>
+      <small style="color:var(--gray);"><strong>Parametrlar:</strong> ${c.flags}</small>
+    </div>
+  `).join('');
+
+  // Terminalni yangilash
+  const term = document.getElementById('cliOutput');
+  term.innerHTML = `[Dars faollashdi: ${lesson.title}]\nTayyor buyruqni bosing yoki terminalga yozing:\n`;
+  if (cmds[0]) {
+    term.innerHTML += `<span style="color:#7ee787;">Maslahat: quyidagi buyruqni bajarib ko'ring:</span> \n$ ${cmds[0].cmd}\n`;
+  }
+
+  renderLessonsList();
+}
+
+function copyCmd(cmd) {
+  navigator.clipboard.writeText(cmd);
+  Toast.success('Buyruq nusxalandi: ' + cmd);
+}
+
+function executePresetCmd(cmd, output) {
+  const term = document.getElementById('cliOutput');
+  term.innerHTML += `\n<span style="color:#2ea043;">root@kali-lab:~# ${cmd}</span>\n${output}\n`;
+  term.scrollTop = term.scrollHeight;
+  Toast.success('Buyruq terminalda bajarildi! ✅');
+}
+
+function handleCliKeyDown(e) {
+  if (e.key === 'Enter') {
+    executeEnteredCommand();
+  }
+}
+
+function executeEnteredCommand() {
+  const input = document.getElementById('cliInputField');
+  const val = input.value.trim();
+  if (!val) return;
+
+  const term = document.getElementById('cliOutput');
+  term.innerHTML += `\n<span style="color:#2ea043;">kali@lab:~$ ${val}</span>\n`;
+
+  if (val === 'clear') {
+    clearCliTerminal();
+    input.value = '';
+    return;
+  } else if (val === 'help') {
+    term.innerHTML += `Mavjud amallar:\n- Dars kartasidagi buyruqlarni kiriting\n- clear (ekranni tozalash)\n- whoami (foydalanuvchi)\n- ls -la (fayllar ro'yxati)\n`;
+  } else if (val.startsWith('nmap')) {
+    term.innerHTML += `Starting Nmap 7.94 ( https://nmap.org )\nNmap scan report for target (192.168.1.1)\nHost is up (0.0024s latency).\nPORT   STATE SERVICE VERSION\n80/tcp open  http    Apache/2.4.52\nNmap done: 1 IP address scanned.\n`;
+  } else if (val.startsWith('sqlmap')) {
+    term.innerHTML += `[+] Target database: MySQL 8.0\n[+] Vulnerable parameter: id (GET)\n[+] Databases found: [test_db, prod_users]\n`;
+  } else {
+    term.innerHTML += `[CLI] Buyruq qabul qilindi va simulyatsiyada bajarildi: ${val}\nExit code: 0 (OK)\n`;
+  }
+
+  term.scrollTop = term.scrollHeight;
+  input.value = '';
+}
+
+function clearCliTerminal() {
+  document.getElementById('cliOutput').textContent = 'root@kali-lab:~# (Tozalandi)\n';
+}
+
+async function buySingleLesson(courseId, lessonId, title, price) {
+  Loading.show();
+  try {
+    const res = await API.post('/payment/buy-lesson', { courseId, lessonId, paymentMethod: 'click' });
+    Loading.hide();
+    Toast.success(res.message || 'Dars muvaffaqiyatli xarid qilindi!');
+    userPurchasedIds.push(lessonId.toString());
+    selectLesson(currentIndex);
+  } catch (e) {
+    Loading.hide();
+    Toast.error(e.message || 'Xaridda xatolik yuz berdi');
+  }
+}
+
+function prevLesson() {
+  if (currentIndex > 0) selectLesson(currentIndex - 1);
+}
+
+function nextLesson() {
+  if (currentIndex < flatLessons.length - 1) selectLesson(currentIndex + 1);
+}
+
+function completeCurrentLesson() {
+  Toast.success('Darsdagi barcha buyruqlar o\'rganildi! ✅');
+  const percent = Math.min(100, Math.round(((currentIndex + 1) / flatLessons.length) * 100));
+  document.getElementById('learnProgressPercent').textContent = `${percent}%`;
+  document.getElementById('learnProgressBarFill').style.width = `${percent}%`;
+  if (currentIndex < flatLessons.length - 1) {
+    setTimeout(nextLesson, 600);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initLearnPage);
+</script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

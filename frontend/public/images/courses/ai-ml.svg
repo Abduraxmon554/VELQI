@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Artificial intelligence and machine learning">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#251747"/><stop offset="1" stop-color="#a43a8f"/></linearGradient><linearGradient id="line" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f0abfc"/><stop offset="1" stop-color="#67e8f9"/></linearGradient></defs>
+  <rect width="800" height="450" rx="30" fill="url(#bg)"/><circle cx="690" cy="70" r="160" fill="#fff" opacity=".05"/>
+  <g stroke="url(#line)" stroke-width="5" opacity=".9"><path d="m260 165 100 65 105-95 90 105-115 85-115-15-65 75m100-220 15 205m85-235-30 245m110-140-165-15-110 100m200-110-95 125"/></g>
+  <g fill="#fff" stroke="#f0abfc" stroke-width="5"><circle cx="260" cy="165" r="14"/><circle cx="360" cy="230" r="14"/><circle cx="465" cy="135" r="14"/><circle cx="555" cy="240" r="14"/><circle cx="440" cy="325" r="14"/><circle cx="325" cy="310" r="14"/><circle cx="260" cy="385" r="14"/></g>
+  <text x="400" y="420" fill="#fff" font-family="Arial,sans-serif" font-size="29" font-weight="700" text-anchor="middle">ARTIFICIAL INTELLIGENCE • MACHINE LEARNING</text>
+</svg>

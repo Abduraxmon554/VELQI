@@ -1,0 +1,27 @@
+<aside class="admin-sidebar">
+  <a class="admin-logo" href="/admin">
+    <img class="logo-icon" src="/images/velqi-logo-crown.png" alt="">
+    <span>VELQI <small>ADMIN</small></span>
+  </a>
+  <nav class="admin-nav">
+    <a href="/admin" class="admin-nav-link <%= currentAdminPage === 'dashboard' ? 'active' : '' %>"><i class="fa-solid fa-gauge"></i> Boshqaruv</a>
+    <a href="/admin/courses" class="admin-nav-link <%= currentAdminPage === 'courses' ? 'active' : '' %>"><i class="fa-solid fa-graduation-cap"></i> Kurslar</a>
+    <a href="/admin/users" class="admin-nav-link <%= currentAdminPage === 'users' ? 'active' : '' %>"><i class="fa-solid fa-users"></i> Foydalanuvchilar</a>
+    <a href="/admin/orders" class="admin-nav-link <%= currentAdminPage === 'orders' ? 'active' : '' %>"><i class="fa-solid fa-receipt"></i> Buyurtmalar</a>
+    <a href="/" class="admin-nav-link"><i class="fa-solid fa-house"></i> Saytga qaytish</a>
+  </nav>
+  <div class="lang-switcher up" data-no-i18n>
+          <button class="lang-btn" type="button" title="Til / Язык / Language" aria-label="Language">
+            <i class="fa-solid fa-globe"></i> <span data-lang-current>UZ</span>
+          </button>
+          <div class="lang-menu">
+            <button type="button" data-set-lang="uz">🇺🇿 O'zbekcha</button>
+            <button type="button" data-set-lang="ru">🇷🇺 Русский</button>
+            <button type="button" data-set-lang="en">🇬🇧 English</button>
+          </div>
+        </div>
+  <button class="theme-toggle-btn admin-theme-btn" id="themeToggleBtn" type="button" onclick="toggleTheme()" title="Qora/Oq dizayn">
+    <i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeText">Qora</span>
+  </button>
+  <button class="admin-logout" type="button" onclick="adminLogout()"><i class="fa-solid fa-right-from-bracket"></i> Chiqish</button>
+</aside>

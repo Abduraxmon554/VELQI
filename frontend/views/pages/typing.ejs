@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tez yozish mashqi | VELQI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+  <main class="typing-page container">
+    <header class="typing-heading">
+      <span class="section-badge"><i class="fa-regular fa-keyboard"></i> Bepul mashq</span>
+      <h1>Tez yozishni mashq qiling</h1>
+      <p>Matnni imkon qadar tez va xatosiz tering. Natijangiz mashq davomida yangilanadi.</p>
+    </header>
+    <section class="typing-card" aria-label="Tez yozish testi">
+      <div class="typing-toolbar">
+        <label for="typingDuration">Vaqt</label>
+        <select id="typingDuration">
+          <option value="30">30 soniya</option>
+          <option value="60" selected>60 soniya</option>
+        </select>
+        <button id="typingRestart" class="btn btn-outline-primary" type="button"><i class="fa-solid fa-rotate"></i> Qayta boshlash</button>
+      </div>
+      <div id="typingText" class="typing-text" aria-live="polite"></div>
+      <label class="sr-only" for="typingInput">Yuqoridagi matnni shu yerga yozing</label>
+      <textarea id="typingInput" rows="3" placeholder="Boshlash uchun shu yerga bosing va yozing..." autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>
+      <div class="typing-stats">
+        <div><strong id="typingTime">60</strong><span>soniya</span></div>
+        <div><strong id="typingWpm">0</strong><span>so‘z/min</span></div>
+        <div><strong id="typingAccuracy">100%</strong><span>aniqlik</span></div>
+        <div><strong id="typingBest">0</strong><span>eng yaxshi</span></div>
+      </div>
+      <p id="typingMessage" class="typing-message" role="status">Yozishni boshlang — vaqt avtomatik yuradi.</p>
+    </section>
+  </main>
+  <%- include('../partials/footer') %>
+  <script src="/js/main.js"></script>
+  <script>
+    const typingSamples = [
+      'Har kuni ozgina mashq qilish orqali yozish tezligi va aniqligini oshirish mumkin.',
+      'Dasturchi yaxshi kod yozish bilan birga, fikrini aniq va tushunarli ifodalaydi.',
+      'Kiberxavfsizlikda tizimlarni himoyalash va mas’uliyat bilan ishlash muhim.'
+    ];
+    const textElement = document.getElementById('typingText');
+    const inputElement = document.getElementById('typingInput');
+    const durationElement = document.getElementById('typingDuration');
+    const messageElement = document.getElementById('typingMessage');
+    let sample = '';
+    let remaining = 60;
+    let timer = null;
+    let startedAt = null;
+    let finished = false;
+
+    function resetTyping() {
+      clearInterval(timer);
+      timer = null;
+      startedAt = null;
+      finished = false;
+      remaining = Number(durationElement.value);
+      sample = typingSamples[Math.floor(Math.random() * typingSamples.length)];
+      textElement.textContent = '';
+      sample.split('').forEach((character) => {
+        const span = document.createElement('span');
+        span.textContent = character;
+        textElement.appendChild(span);
+      });
+      inputElement.value = '';
+      inputElement.disabled = false;
+      document.getElementById('typingTime').textContent = remaining;
+      document.getElementById('typingWpm').textContent = '0';
+      document.getElementById('typingAccuracy').textContent = '100%';
+      document.getElementById('typingBest').textContent = localStorage.getItem('typingBestWpm') || '0';
+      messageElement.textContent = 'Yozishni boshlang — vaqt avtomatik yuradi.';
+      inputElement.focus();
+    }
+
+    function updateTyping() {
+      const typed = inputElement.value;
+      const spans = textElement.querySelectorAll('span');
+      let correct = 0;
+      spans.forEach((span, index) => {
+        span.classList.remove('correct', 'incorrect', 'current');
+        if (index < typed.length) {
+          const isCorrect = typed[index] === sample[index];
+          span.classList.add(isCorrect ? 'correct' : 'incorrect');
+          if (isCorrect) correct += 1;
+        } else if (index === typed.length) {
+          span.classList.add('current');
+        }
+      });
+
+      const elapsed = startedAt ? (Date.now() - startedAt) / 60000 : 0;
+      const wpm = elapsed ? Math.round((correct / 5) / elapsed) : 0;
+      const accuracy = typed.length ? Math.round((correct / typed.length) * 100) : 100;
+      document.getElementById('typingWpm').textContent = wpm;
+      document.getElementById('typingAccuracy').textContent = `${accuracy}%`;
+
+      if (typed.length >= sample.length) finishTyping();
+    }
+
+    function finishTyping() {
+      if (finished) return;
+      finished = true;
+      clearInterval(timer);
+      inputElement.disabled = true;
+      const wpm = Number(document.getElementById('typingWpm').textContent);
+      const best = Number(localStorage.getItem('typingBestWpm') || 0);
+      if (wpm > best) {
+        localStorage.setItem('typingBestWpm', String(wpm));
+        document.getElementById('typingBest').textContent = wpm;
+      }
+      messageElement.textContent = 'Mashq tugadi! Qayta boshlash tugmasi bilan yana urinib ko‘ring.';
+    }
+
+    inputElement.addEventListener('input', () => {
+      if (!startedAt && inputElement.value.length) {
+        startedAt = Date.now();
+        messageElement.textContent = 'Ajoyib, davom eting!';
+        timer = setInterval(() => {
+          remaining -= 1;
+          document.getElementById('typingTime').textContent = remaining;
+          updateTyping();
+          if (remaining <= 0) finishTyping();
+        }, 1000);
+      }
+      updateTyping();
+    });
+    document.getElementById('typingRestart').addEventListener('click', resetTyping);
+    durationElement.addEventListener('change', resetTyping);
+    resetTyping();
+  </script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

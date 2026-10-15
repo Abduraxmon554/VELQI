@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Frontend development">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111d3b"/><stop offset="1" stop-color="#5b4ce2"/></linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#65d5ff"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+  </defs>
+  <rect width="800" height="450" rx="30" fill="url(#bg)"/>
+  <circle cx="680" cy="75" r="150" fill="#fff" opacity=".05"/>
+  <rect x="178" y="95" width="450" height="260" rx="22" fill="#0b1226" stroke="#8395ff" stroke-opacity=".55" stroke-width="4"/>
+  <path d="M178 144h450" stroke="#8395ff" stroke-opacity=".35" stroke-width="4"/>
+  <circle cx="211" cy="120" r="7" fill="#fb7185"/><circle cx="236" cy="120" r="7" fill="#fbbf24"/><circle cx="261" cy="120" r="7" fill="#4ade80"/>
+  <path d="m321 197-48 42 48 42m162-84 48 42-48 42m-47-101-35 117" fill="none" stroke="url(#glow)" stroke-linecap="round" stroke-linejoin="round" stroke-width="13"/>
+  <text x="400" y="402" fill="#fff" font-family="Arial,sans-serif" font-size="29" font-weight="700" text-anchor="middle">FRONTEND • WEB DEVELOPMENT</text>
+</svg>

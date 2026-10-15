@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tizimga Kirish | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body>
+
+<%- include('../partials/navbar') %>
+
+<div class="auth-page">
+  <div class="auth-left">
+    <div style="max-width: 440px; color: white;">
+      <div style="font-size: 3rem; margin-bottom: 20px;">🚀</div>
+      <h1 style="color: white; font-size: 2.4rem; margin-bottom: 16px;">Bilim olishni davom ettiring</h1>
+      <p style="font-size: 1.05rem; opacity: 0.9; line-height: 1.7;">
+        Kiberxavfsizlik, Frontend, Node.js, AI, Backend va Grafik Dizayn bo'yicha eng sara kurslar profilingizda sizni kutmoqda.
+      </p>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <h2 class="auth-title">Xush kelibsiz! 👋</h2>
+      <p class="auth-subtitle">Profilingizga kirish uchun ma'lumotlaringizni kiriting</p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label">Email Manzili</label>
+          <div class="input-group">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" id="email" class="form-control" placeholder="nomingiz@misol.uz" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <label class="form-label" style="margin:0;">Maxfiy Parol</label>
+            <a href="/forgot-password" style="font-size:0.82rem; color:var(--primary);">Parolni unutdingizmi?</a>
+          </div>
+          <div class="input-group">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+            <button type="button" class="input-toggle"><i class="fa-solid fa-eye"></i></button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 13px; font-size: 1rem; margin-top: 10px;">
+          <i class="fa-solid fa-right-to-bracket"></i> Kirish
+        </button>
+      </form>
+
+      <div class="divider">yoki</div>
+
+      <p style="text-align: center; font-size: 0.9rem; color: var(--gray); margin-top: 24px;">
+        Hali hisobingiz yo'qmi? <a href="/register" style="color: var(--primary); font-weight: 600;">Ro'yxatdan o'tish</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

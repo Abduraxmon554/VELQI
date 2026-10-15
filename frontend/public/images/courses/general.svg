@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Online learning">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#25345a"/><stop offset="1" stop-color="#6378dc"/></linearGradient></defs>
+  <rect width="800" height="450" rx="30" fill="url(#bg)"/><circle cx="655" cy="82" r="170" fill="#fff" opacity=".06"/>
+  <path d="m400 112 184 76-184 77-184-77z" fill="#fff" opacity=".95"/><path d="M290 233v76c64 50 156 50 220 0v-76l-110 46z" fill="#dbeafe"/>
+  <path d="M584 188v97" stroke="#fde68a" stroke-width="8" stroke-linecap="round"/><circle cx="584" cy="296" r="13" fill="#fde68a"/>
+  <text x="400" y="405" fill="#fff" font-family="Arial,sans-serif" font-size="30" font-weight="700" text-anchor="middle">LEARN • BUILD • GROW</text>
+</svg>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <link rel="icon" type="image/png" href="/images/velqi-logo-crown.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sevimlilar | VELQI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/enhancements.css">
+</head>
+<body style="background: var(--bg);">
+
+<%- include('../partials/navbar') %>
+
+<div class="container" style="padding-top: calc(var(--navbar-height) + 40px); padding-bottom: 80px;">
+  <h1 style="font-size: 2rem; margin-bottom: 24px;">Sevimlilar Ro'yxati ❤️</h1>
+  <div class="courses-grid" id="wishlistGrid"></div>
+</div>
+
+<%- include('../partials/footer') %>
+
+<script src="/js/main.js"></script>
+<script>
+async function loadWishlist() {
+  if (!AuthState.isLoggedIn()) {
+    window.location.href = '/login?redirect=/wishlist';
+    return;
+  }
+  const grid = document.getElementById('wishlistGrid');
+  try {
+    const res = await API.get('/users/dashboard');
+    const list = res.data.user.wishlist || [];
+
+    if (list.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state" style="grid-column: 1/-1;">
+          <div class="empty-state-icon">🤍</div>
+          <h3>Sevimlilar ro'yxatingiz bo'sh</h3>
+          <p>O'zingizga yoqqan kurslarni saqlab qo'ying</p>
+          <a href="/courses" class="btn btn-primary">Kurslarni ko'rish</a>
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = list.map(c => `
+      <div class="course-card">
+        <div class="course-thumbnail">
+          <img src="${c.thumbnail || '/images/default-course.jpg'}" alt="${c.title}" onerror="this.src='/images/default-course.jpg'">
+        </div>
+        <div class="course-body">
+          <h3 class="course-title"><a href="/courses/${c.slug || c._id}">${c.title}</a></h3>
+          <div class="course-footer">
+            <strong style="color:var(--primary); font-size:1.1rem;">${formatPrice(c.currentPrice || c.price)}</strong>
+            <button class="btn btn-primary btn-sm" data-add-to-cart="${c._id}">Savatchaga</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  } catch (err) {
+    Toast.error('Sevimlilarni yuklashda xatolik');
+  }
+}
+document.addEventListener('DOMContentLoaded', loadWishlist);
+</script>
+<script src="/js/i18n-dict.js"></script>
+<script src="/js/i18n.js"></script>
+</body>
+</html>

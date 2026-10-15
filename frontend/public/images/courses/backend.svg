@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Backend development">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#102d35"/><stop offset="1" stop-color="#087f73"/></linearGradient><linearGradient id="shine" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a7f3d0"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+  <rect width="800" height="450" rx="30" fill="url(#bg)"/><circle cx="120" cy="70" r="170" fill="#fff" opacity=".05"/>
+  <g fill="#092c35" stroke="url(#shine)" stroke-width="5">
+    <rect x="205" y="105" width="390" height="75" rx="18"/><rect x="205" y="195" width="390" height="75" rx="18"/><rect x="205" y="285" width="390" height="75" rx="18"/>
+  </g>
+  <g fill="#5eead4"><circle cx="245" cy="143" r="9"/><circle cx="245" cy="233" r="9"/><circle cx="245" cy="323" r="9"/></g>
+  <g stroke="#99f6e4" stroke-linecap="round" stroke-width="7"><path d="M277 140h260m-260 90h215m-215 90h240"/></g>
+  <text x="400" y="414" fill="#fff" font-family="Arial,sans-serif" font-size="29" font-weight="700" text-anchor="middle">NODE.JS • BACKEND • DATABASES</text>
+</svg>
