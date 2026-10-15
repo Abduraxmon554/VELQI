@@ -1,4 +1,6 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = process.env.STRIPE_SECRET_KEY
+  ? require('stripe')(process.env.STRIPE_SECRET_KEY)
+  : null;
 const Order = require('../models/Order');
 const Course = require('../models/Course');
 const User = require('../models/User');
@@ -9,6 +11,10 @@ const { logger } = require('../config/database');
 // @access  Private
 exports.createPaymentIntent = async (req, res, next) => {
   try {
+    if (!stripe) {
+      return res.status(503).json({ success: false, message: 'Stripe to\'lov xizmati sozlanmagan' });
+    }
+
     const { courseIds } = req.body;
     
     const courses = await Course.find({ _id: { $in: courseIds } });
@@ -47,6 +53,10 @@ exports.createPaymentIntent = async (req, res, next) => {
 // @access  Private
 exports.confirmPayment = async (req, res, next) => {
   try {
+    if (!stripe) {
+      return res.status(503).json({ success: false, message: 'Stripe to\'lov xizmati sozlanmagan' });
+    }
+
     const { paymentIntentId, courseIds } = req.body;
     
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);

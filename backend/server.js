@@ -198,35 +198,34 @@ app.get('/admin/orders', requireAdminPage, (req, res) => res.render('pages/admin
 app.use(notFound);
 app.use(errorHandler);
 
-// Server
-const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
-  const url = `http://localhost:${PORT}`;
-  logger.info(`🚀 Server ishga tushdi: ${url}`);
-  logger.info(`📚 VELQI - Online Ta'lim Platformasi`);
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  const server = app.listen(PORT, () => {
+    const url = `http://localhost:${PORT}`;
+    logger.info(`🚀 Server ishga tushdi: ${url}`);
+    logger.info(`📚 VELQI - Online Ta'lim Platformasi`);
 
-  if (process.env.npm_lifecycle_event === 'start' && process.platform === 'darwin') {
-    execFile('open', [url], (err) => {
-      if (err) logger.warn(`Brauzerni avtomatik ochib bo'lmadi. Sayt manzili: ${url}. Sabab: ${err.message}`);
-    });
-  }
-});
+    if (process.env.npm_lifecycle_event === 'start' && process.platform === 'darwin') {
+      execFile('open', [url], (err) => {
+        if (err) logger.warn(`Brauzerni avtomatik ochib bo'lmadi. Sayt manzili: ${url}. Sabab: ${err.message}`);
+      });
+    }
+  });
 
-// Unhandled errors
-process.on('unhandledRejection', (err) => {
-  const msg = (err && err.message) || String(err);
-  // Ma'lumotlar bazasi ulanish xatosi serverni o'chirmasligi kerak
-  if (err && (/^Mongo/.test(err.name || '') || /ECONNREFUSED|ENOTFOUND|ETIMEDOUT/.test(msg))) {
-    logger.warn(`Ulanish xatosi (server ishlashda davom etadi): ${msg}`);
-    return;
-  }
-  logger.error(`Unhandled Rejection: ${msg}`);
-  server.close(() => process.exit(1));
-});
+  process.on('unhandledRejection', (err) => {
+    const msg = (err && err.message) || String(err);
+    if (err && (/^Mongo/.test(err.name || '') || /ECONNREFUSED|ENOTFOUND|ETIMEDOUT/.test(msg))) {
+      logger.warn(`Ulanish xatosi (server ishlashda davom etadi): ${msg}`);
+      return;
+    }
+    logger.error(`Unhandled Rejection: ${msg}`);
+    server.close(() => process.exit(1));
+  });
 
-process.on('uncaughtException', (err) => {
-  logger.error(`Uncaught Exception: ${err.message}`);
-  process.exit(1);
-});
+  process.on('uncaughtException', (err) => {
+    logger.error(`Uncaught Exception: ${err.message}`);
+    process.exit(1);
+  });
+}
 
 module.exports = app;
