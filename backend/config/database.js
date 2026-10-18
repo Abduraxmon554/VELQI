@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const winston = require("winston");
 
+// Vercel serverless muhitida MongoDB buffering qotib qolmasligi uchun
+mongoose.set("bufferCommands", false);
+
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -55,21 +58,24 @@ const ensureAdmin = async () => {
 };
 
 let retryTimer = null;
+let cachedConn = null;
+
 const connectDB = async () => {
+  if (cachedConn && mongoose.connection.readyState === 1) {
+    return cachedConn;
+  }
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/eduplatform", {
-      serverSelectionTimeoutMS: 5000
+      serverSelectionTimeoutMS: 3000,
+      bufferCommands: false
     });
+    cachedConn = conn;
     logger.info(`MongoDB ulandi: ${conn.connection.host}`);
     await ensureAdmin();
-    return true;
+    return conn;
   } catch (error) {
-    logger.error(`MongoDB xatosi: ${error.message}. Sayt ishlayveradi, 10 soniyadan keyin qayta ulanishga urinadi.`);
-    if (!retryTimer) {
-      retryTimer = setTimeout(() => { retryTimer = null; connectDB(); }, 10000);
-      retryTimer.unref && retryTimer.unref();
-    }
-    return false;
+    logger.warn(`MongoDB ulanish ogohlantirishi: ${error.message}`);
+    return null;
   }
 };
 
