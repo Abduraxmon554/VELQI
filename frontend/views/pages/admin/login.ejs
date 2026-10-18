@@ -42,9 +42,7 @@
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            email: document.getElementById('adminEmail').value.trim().toLowerCase() === 'admin'
-              ? 'admin@eduplatform.uz'
-              : document.getElementById('adminEmail').value.trim().toLowerCase(),
+            email: document.getElementById('adminEmail').value.trim(),
             password: document.getElementById('adminPassword').value
           })
         });

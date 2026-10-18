@@ -31,7 +31,7 @@ if (window.location.pathname === '/login') {
       
       setTimeout(() => {
         const redirect = new URLSearchParams(window.location.search).get('redirect');
-        window.location.href = redirect || '/dashboard';
+        window.location.href = redirect || (result.user && result.user.role === 'admin' ? '/admin' : '/dashboard');
       }, 1000);
       
     } catch (err) {

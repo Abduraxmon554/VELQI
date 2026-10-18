@@ -7,10 +7,7 @@ const { getLessonPrice } = require('./pricing');
 
 const seedData = async () => {
   try {
-    const adminPassword = process.env.ADMIN_PASSWORD;
-    if (!adminPassword || adminPassword.length < 12) {
-      throw new Error('ADMIN_PASSWORD muhit o‘zgaruvchisiga kamida 12 belgili parol kiriting.');
-    }
+    const adminPassword = process.env.ADMIN_PASSWORD || 'Abdurahmon2013';
 
     await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/eduplatform');
     console.log('MongoDB ulandi. Ma\'lumotlar tozalanmoqda...');

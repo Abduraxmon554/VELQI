@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Email kiritish majburiy'],
     unique: true,
     lowercase: true,
-    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Email noto\'g\'ri']
+    match: [/^(\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+|admin)$/, 'Email noto\'g\'ri']
   },
   password: {
     type: String,

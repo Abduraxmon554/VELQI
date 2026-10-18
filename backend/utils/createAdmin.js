@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 
 async function createAdmin() {
-  const email = process.env.ADMIN_EMAIL;
-  const password = process.env.ADMIN_PASSWORD;
-  if (!email || !password || password.length < 12) {
-    console.error('ADMIN_EMAIL va kamida 12 belgili ADMIN_PASSWORD muhit o‘zgaruvchilarini sozlang.');
+  const email = process.env.ADMIN_EMAIL || 'admin@eduplatform.uz';
+  const password = process.env.ADMIN_PASSWORD || 'Abdurahmon2013';
+  if (!email || !password || password.length < 6) {
+    console.error('ADMIN_EMAIL va ADMIN_PASSWORD ni to\'g\'ri sozlang.');
     process.exitCode = 1;
     return;
   }

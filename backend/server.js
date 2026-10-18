@@ -62,7 +62,7 @@ app.use(helmet({
       // localhost (http) da CSS/JS yuklanmay qolmasligi uchun faqat production'da https'ga majburlanadi
       upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
       imgSrc: ["'self'", "data:", "https:", "blob:"],
-      connectSrc: ["'self'", "https://api.stripe.com"],
+      connectSrc: ["'self'", "https://api.stripe.com", "https://ce.judge0.com"],
       frameSrc: ["'self'", "about:", "https://js.stripe.com", "https://www.youtube-nocookie.com", "https://player.vimeo.com"],
       mediaSrc: ["'self'", "https:", "blob:"],
     },

@@ -22,8 +22,8 @@ const registerValidation = [
 ];
 
 const loginValidation = [
-  body('email').isEmail().normalizeEmail(),
-  body('password').notEmpty()
+  body('email').trim().notEmpty().withMessage('Login yoki email kiritish majburiy'),
+  body('password').notEmpty().withMessage('Parol kiritish majburiy')
 ];
 
 router.post('/register', authLimiter, registerValidation, register);
