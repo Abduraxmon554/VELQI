@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { logger } = require('../config/database');
 const nodemailer = require('nodemailer');
